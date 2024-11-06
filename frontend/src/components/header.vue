@@ -1,6 +1,5 @@
 <template>
     <div class="header">
-        <!-- 折叠按钮 -->
         <div class="header-left">
             <div class="web-title">SkyShelf</div>
         </div>
@@ -40,7 +39,6 @@ const sidebar = useSidebarStore();
 
 
 
-// 用户名下拉菜单选择事件
 const router = useRouter();
 const handleCommand = (command: string) => {
     if (command == 'loginout') {
