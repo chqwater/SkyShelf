@@ -3,7 +3,7 @@
         <v-header />
         <v-sidebar />
         <div class="content-box" :class="{ 'content-collapse': sidebar.collapse }">
-            
+            <router-view/>
         </div>
         <div class="bottom-bar">Copyright ©️ </div>
     </div>

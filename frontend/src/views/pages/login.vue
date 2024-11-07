@@ -19,6 +19,7 @@
                         type="password"
                         placeholder="Password"
                         v-model="param.password"
+                        show-password
                         @keyup.enter="submitForm(login)"
                     >
                         <template #prepend>
@@ -44,7 +45,6 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
-import { useTabsStore } from '@/store/tabs';
 import { usePermissStore } from '@/store/permiss';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
@@ -98,8 +98,6 @@ const submitForm = (formEl: FormInstance | undefined) => {
     });
 };
 
-const tabs = useTabsStore();
-tabs.clearTabs();
 </script>
 
 <style scoped>

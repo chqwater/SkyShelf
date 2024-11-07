@@ -89,7 +89,7 @@ onMounted(() => {
     top: 70px;
     bottom: 50px;
     overflow-y: scroll;
-
+    padding-top: 10px;
 }
 .collapse-btn {
 	position: absolute;

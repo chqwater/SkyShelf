@@ -21,16 +21,16 @@ const routes: RouteRecordRaw[] = [
                     title: 'Current Reading',
                     noAuth: true,
                 },
-                component: () => import(/* webpackChunkName: "dashboard" */ '../views/dashboard.vue'),
+                component: () => import('../views/dashboard.vue'),
             },
             {
-							path: '/recommendation',
-							name: 'recommendation',
-							meta: {
-								title: 'Recommendation',
-								noAuth: true,
-							},
-							component: () => import(/* webpackChunkName: "dashboard" */ '../views/recommendation.vue')
+				path: '/recommendation',
+				name: 'recommendation',
+				meta: {
+					title: 'Recommendation',
+					noAuth: true,
+				},
+				component: () => import('../views/recommendation.vue')
             },
             {
                 path: '/ucenter',
@@ -38,7 +38,7 @@ const routes: RouteRecordRaw[] = [
                 meta: {
                     title: 'Profile',
                 },
-                component: () => import(/* webpackChunkName: "ucenter" */ '../views/pages/ucenter.vue'),
+                component: () => import('../views/pages/ucenter.vue'),
             }
         ],
     },
@@ -57,6 +57,14 @@ const routes: RouteRecordRaw[] = [
             noAuth: true,
         },
         component: () => import(/* webpackChunkName: "register" */ '../views/pages/register.vue'),
+    },
+    {
+        path: '/journey',
+        meta: {
+            title: 'Journey',
+            noAuth: true
+        },
+        component: () => import(/* webpackChunkName: "register" */ '../views/pages/journey.vue'),
     },
     {
         path: '/reset-pwd',

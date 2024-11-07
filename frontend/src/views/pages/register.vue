@@ -14,20 +14,12 @@
                         </template>
                     </el-input>
                 </el-form-item>
-                <el-form-item prop="email">
-                    <el-input v-model="param.email" placeholder="email">
-                        <template #prepend>
-                            <el-icon>
-                                <Message />
-                            </el-icon>
-                        </template>
-                    </el-input>
-                </el-form-item>
                 <el-form-item prop="password">
                     <el-input
                         type="password"
                         placeholder="Password"
                         v-model="param.password"
+                        show-password
                         @keyup.enter="submitForm(register)"
                     >
                         <template #prepend>
@@ -76,7 +68,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
     formEl.validate((valid: boolean) => {
         if (valid) {
             ElMessage.success('registered, please login');
-            router.push('/login');
+            router.push('/journey');
         } else {
             return false;
         }

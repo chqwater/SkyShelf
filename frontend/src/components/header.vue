@@ -5,12 +5,7 @@
         </div>
         <div class="header-right">
             <div class="header-user-con">
-                <div class="btn-icon" @click="setFullScreen">
-                    <el-tooltip effect="dark" content="Full Screen" placement="bottom">
-                        <i class="el-icon-lx-full"></i>
-                    </el-tooltip>
-                </div>
-                <el-avatar class="user-avator" :size="30" />
+                <el-avatar class="user-avator" :size="40" :icon="UserFilled"></el-avatar>
                 <el-dropdown class="user-name" trigger="click" @command="handleCommand">
                     <span class="el-dropdown-link">
                         {{ username }}
@@ -32,12 +27,11 @@
 <script setup lang="ts">
 import { useSidebarStore } from '../store/sidebar';
 import { useRouter } from 'vue-router';
+import { UserFilled } from '@element-plus/icons-vue'
 
 const username: string | null = localStorage.getItem('vuems_name');
 
 const sidebar = useSidebarStore();
-
-
 
 const router = useRouter();
 const handleCommand = (command: string) => {
@@ -49,13 +43,6 @@ const handleCommand = (command: string) => {
     }
 };
 
-const setFullScreen = () => {
-    if (document.fullscreenElement) {
-        document.exitFullscreen();
-    } else {
-        document.body.requestFullscreen.call(document.body);
-    }
-};
 </script>
 <style scoped>
 .header {
@@ -66,9 +53,13 @@ const setFullScreen = () => {
     width: 100%;
     height: 70px;
     color: var(--header-text-color);
-    background-color: var(--header-bg-color);
-    border-bottom: 1px solid #ddd;
-    
+    background-color: #fff;     
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  
+    position: fixed;     
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; 
 }
 
 .header-left {
@@ -98,9 +89,6 @@ const setFullScreen = () => {
     font-size: 22px;
 }
 
-.collapse-btn:hover {
-    opacity: 1;
-}
 
 .header-right {
     float: right;
@@ -113,11 +101,6 @@ const setFullScreen = () => {
     align-items: center;
 }
 
-.btn-fullscreen {
-    transform: rotate(45deg);
-    margin-right: 5px;
-    font-size: 24px;
-}
 
 .btn-icon {
     position: relative;
@@ -132,16 +115,6 @@ const setFullScreen = () => {
     font-size: 20px;
 }
 
-.btn-bell-badge {
-    position: absolute;
-    right: 4px;
-    top: 0px;
-    width: 8px;
-    height: 8px;
-    border-radius: 4px;
-    background: #f56c6c;
-    color: var(--header-text-color);
-}
 
 .user-avator {
     margin: 0 10px 0 20px;
