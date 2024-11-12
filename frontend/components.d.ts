@@ -7,6 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AdminHeader: typeof import('./src/components/adminHeader.vue')['default']
     Countup: typeof import('./src/components/countup.vue')['default']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -72,6 +73,7 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Sidebar: typeof import('./src/components/sidebar.vue')['default']
+    SiderbarAdmin: typeof import('./src/components/siderbarAdmin.vue')['default']
     TableCustom: typeof import('./src/components/table-custom.vue')['default']
     TableDetail: typeof import('./src/components/table-detail.vue')['default']
     TableEdit: typeof import('./src/components/table-edit.vue')['default']

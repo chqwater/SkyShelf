@@ -1,21 +1,22 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import { usePermissStore } from '../store/permiss';
 import Home from '../views/home.vue';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
+import AdminHome from '@/views/admin/adminHome.vue';
 
 const routes: RouteRecordRaw[] = [
     {
         path: '/',
-        redirect: '/dashboard',
+        redirect: '/home',
     },
     {
-        path: '/',
+        path: '/home',
         name: 'Home',
         component: Home,
         children: [
             {
-                path: '/dashboard',
+                path: 'dashboard',
                 name: 'dashboard',
                 meta: {
                     title: 'Current Reading',
@@ -24,7 +25,7 @@ const routes: RouteRecordRaw[] = [
                 component: () => import('../views/dashboard.vue'),
             },
             {
-				path: '/recommendation',
+				path: 'recommendation',
 				name: 'recommendation',
 				meta: {
 					title: 'Recommendation',
@@ -33,7 +34,7 @@ const routes: RouteRecordRaw[] = [
 				component: () => import('../views/recommendation.vue')
             },
             {
-                path: '/ucenter',
+                path: 'ucenter',
                 name: 'ucenter',
                 meta: {
                     title: 'Profile',
@@ -41,6 +42,31 @@ const routes: RouteRecordRaw[] = [
                 component: () => import('../views/pages/ucenter.vue'),
             }
         ],
+    },
+    {
+        path: '/admin',
+        name: 'Admin',
+        component: AdminHome,
+        children: [
+            {
+                path: 'book',
+                name: 'book',
+                meta: {
+                    title: 'Book-Admin',
+                    noAuth: true
+                },
+                component: () => import('../views/admin/bookAdmin.vue')
+            },
+            {
+                path: 'user',
+                name: 'user',
+                meta: {
+                    title: 'User-Admin',
+                    noAuth: true
+                },
+                component: () => import('../views/admin/userAdmin.vue')
+            }
+        ]
     },
     {
         path: '/login',
@@ -94,7 +120,7 @@ const routes: RouteRecordRaw[] = [
 ];
 
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes,
 });
 

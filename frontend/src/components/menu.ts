@@ -4,13 +4,28 @@ export const menuData: Menus[] = [
     {
         id: '0',
         title: 'Current Reading',
-        index: '/dashboard',
+        index: '/home/dashboard',
         icon: 'Reading',
     },
     {
         id: '1',
         title: 'Recommendation',
-        index: '/recommendation',
+        index: '/home/recommendation',
         icon: 'HomeFilled'
     }
 ];
+
+export const menuAdmin: Menus[] = [
+    {
+        id: '0',
+        title: 'Book Management',
+        index: '/admin/book',
+        icon: 'Management'
+    },
+    {
+        id: '1',
+        title: 'User Management',
+        index: '/admin/user',
+        icon: 'UserFilled'
+    }
+]
