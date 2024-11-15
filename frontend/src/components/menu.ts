@@ -4,7 +4,7 @@ export const menuData: Menus[] = [
     {
         id: '0',
         title: 'Current Reading',
-        index: '/home/dashboard',
+        index: '/home/booklist',
         icon: 'Reading',
     },
     {

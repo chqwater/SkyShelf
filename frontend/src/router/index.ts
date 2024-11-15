@@ -16,13 +16,13 @@ const routes: RouteRecordRaw[] = [
         component: Home,
         children: [
             {
-                path: 'dashboard',
-                name: 'dashboard',
+                path: 'booklist',
+                name: 'booklist',
                 meta: {
                     title: 'Current Reading',
                     noAuth: true,
                 },
-                component: () => import('../views/dashboard.vue'),
+                component: () => import('../views/booklist.vue'),
             },
             {
 				path: 'recommendation',
