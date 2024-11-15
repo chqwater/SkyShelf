@@ -2,21 +2,21 @@
     "list": [
         {
             "id": 1,
-            "name": "张三",
+            "name": "zhang",
             "password": "123",
             "email": "123@qq.com",
             "phone": "12345678944",
             "date": "2024-01-01",
-            "role": "管理员"
+            "role": "admin"
         },
         {
             "id": 2,
-            "name": "李四",
+            "name": "lee",
             "password": "123",
             "email": "1234@qq.com",
             "phone": "12345678945",
             "date": "2024-01-01",
-            "role": "普通用户"
+            "role": "user"
         }
     ],
     "pageTotal": 2

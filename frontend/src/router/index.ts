@@ -116,6 +116,14 @@ const routes: RouteRecordRaw[] = [
         },
         component: () => import(/* webpackChunkName: "404" */ '../views/pages/404.vue'),
     },
+    {
+        path: '/contact',
+        meta: {
+            title: 'Contact Us',
+            noAuth: true
+        },
+        component: () => import('../views/pages/contact.vue')
+    },
     { path: '/:path(.*)', redirect: '/404' },
 ];
 

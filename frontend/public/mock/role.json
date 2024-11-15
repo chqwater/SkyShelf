@@ -2,7 +2,7 @@
     "list": [
         {
             "id": 1,
-            "name": "管理员",
+            "name": "admin",
             "key": "admin",
             "status": true,
             "permiss": [
@@ -30,7 +30,7 @@
         },
         {
             "id": 2,
-            "name": "普通用户",
+            "name": "user",
             "key": "user",
             "status": true,
             "permiss": [
