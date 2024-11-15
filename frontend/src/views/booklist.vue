@@ -4,7 +4,7 @@
         <div class="cover" @click="" >
             <img :src="item.cover" alt="" style="width: 100%; height: 100%;">
         </div>
-        <div class="title">
+        <div class="title-b">
             {{ item.name }}
         </div>
       </div>
@@ -49,7 +49,7 @@ const prop = reactive({
 .cover:hover{
     border: 1px solid #409EFF;
 }
-.title{
+.title-b{
     display: flex;
     justify-content: center;
     font-family: cursive;
