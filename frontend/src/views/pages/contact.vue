@@ -1,5 +1,5 @@
 <template>
-    <div class="content-box">
+    <div class="content-box-contact">
         <div class="title">
             CONTACT US
         </div>
@@ -52,7 +52,7 @@ const handleBack = ()=>{
 </script>
 
 <style>
-.content-box{
+.content-box-contact{
     display: flex;
     flex-direction: column;
     background-color: #409EFF;
