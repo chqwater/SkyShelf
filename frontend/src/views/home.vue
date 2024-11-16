@@ -45,7 +45,7 @@ const handleClickContact = ()=>{
 .bottom-bar{
     width: 100%;
     min-height: 50px;
-    background-color: #409EFF;
+    background: linear-gradient(45deg, #409EFF, rgb(94, 69, 159));
     position: fixed;
     bottom: 0%;
     left: 0%;

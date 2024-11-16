@@ -77,6 +77,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
     formEl.validate((valid: boolean) => {
         if (valid) {
             ElMessage.success('registered, please login');
+            localStorage.setItem('vuems_token', "JWT_TOKEN");
             router.push('/journey');
         } else {
             return false;

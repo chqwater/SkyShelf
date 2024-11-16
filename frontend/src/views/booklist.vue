@@ -63,7 +63,10 @@ const openBook = (data:any)=>{
     overflow: hidden;
 }
 .cover:hover{
-    border: 1px solid #409EFF;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    background-clip: padding-box;
+    box-shadow: 0 0 90px rgba(64, 158, 255, 1.5), inset 0 0 15px rgba(94, 69, 159, 0.4); 
 }
 .title-b{
     display: flex;

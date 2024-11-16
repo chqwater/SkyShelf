@@ -55,7 +55,7 @@ const handleBack = ()=>{
 .content-box-contact{
     display: flex;
     flex-direction: column;
-    background-color: #409EFF;
+    background: linear-gradient(45deg, #409EFF, rgb(94, 69, 159));
     position: fixed;
     top: 0;
     left: 0;
