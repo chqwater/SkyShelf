@@ -38,9 +38,9 @@
                         </template>
                     </el-input>
                 </el-form-item>
-                <el-button class="login-btn" type="primary" size="large" @click="submitForm(register)">Register</el-button>
+                <el-button class="login-btn" size="large" @click="submitForm(register)">Register</el-button>
                 <p class="login-text">
-                    Already registered?--<el-link type="primary" @click="$router.push('/login')">back to login</el-link>
+                    Already registered?--<span class="navi-btn" @click="$router.push('/login')" style="color: white; text-decoration: underline;">back to login</span>
                 </p>
             </el-form>
         </div>
@@ -88,11 +88,29 @@ const submitForm = (formEl: FormInstance | undefined) => {
 <style scoped>
 .login-bg {
     display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 100vh;
-    background: url(../../assets/img/login-bg.jpg) center/cover no-repeat;
+    background: url(../../assets/img/bg-bp.jpg) center/cover no-repeat;
+}
+.login-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.6);
+    z-index: 1;
+}
+
+.login-bg > * {
+    position: relative;
+    z-index: 2;
 }
 
 .login-header {
@@ -108,18 +126,23 @@ const submitForm = (formEl: FormInstance | undefined) => {
 
 .login-title {
     font-size: 22px;
-    color: #333;
+    color: white;
     font-weight: bold;
 }
 
 .login-container {
-    width: 450px;
-    border-radius: 5px;
-    background: #fff;
+    width: 380px;
+    border-radius: 35px;
+    background: linear-gradient(45deg, #409EFF, rgb(94, 69, 159));
     padding: 40px 50px 50px;
-    box-sizing: border-box;
 }
-
+.login-container:hover{
+    width: 482px;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    background-clip: padding-box;
+    box-shadow: 0 0 90px rgba(64, 158, 255, 1.5), inset 0 0 15px rgba(94, 69, 159, 0.4); 
+}
 .login-btn {
     display: block;
     width: 100%;
@@ -130,6 +153,39 @@ const submitForm = (formEl: FormInstance | undefined) => {
     align-items: center;
     margin-top: 20px;
     font-size: 14px;
-    color: #787878;
+    color: white;
+}
+:deep().el-input__wrapper {
+  background-color: transparent;
+  color: white;
+  border: transparent;
+  border-radius: 50px;
+}
+:deep().el-input__inner{
+    color: white;
+}
+:deep().el-input-group__prepend{
+    background-color: transparent;
+    color: white;
+    border-radius: 50px;
+}
+:deep().el-button{
+    background-color: transparent;
+    border-radius: 50px;
+    font-size: 20px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+}
+:deep().el-button:hover{
+    color: aqua;
+    box-shadow: 0 0 10px 5px white;
+}
+.navi-btn{
+    cursor: pointer;
+}
+.navi-btn:hover{
+    color: aqua  !important;
 }
 </style>

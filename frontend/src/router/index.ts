@@ -4,6 +4,7 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import AdminHome from '@/views/admin/adminHome.vue';
 
+
 const routes: RouteRecordRaw[] = [
     {
         path: '/',
@@ -31,7 +32,7 @@ const routes: RouteRecordRaw[] = [
 				name: 'recommendation',
 				meta: {
 					title: 'Recommendation',
-					noAuth: true,
+                    noAuth: true,
 				},
 				component: () => import('../views/recommendation.vue')
             },
@@ -40,6 +41,7 @@ const routes: RouteRecordRaw[] = [
                 name: 'ucenter',
                 meta: {
                     title: 'Profile',
+                    noAuth: true,
                 },
                 component: () => import('../views/pages/ucenter.vue'),
             }
@@ -48,6 +50,10 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/bookcontent',
         name: 'bookPage',
+        meta: {
+            noAuth: true,
+            title: 'Book Content'
+        },
         component: () => import('../components/bookPage.vue')
     },
     {
@@ -59,8 +65,7 @@ const routes: RouteRecordRaw[] = [
                 path: 'book',
                 name: 'book',
                 meta: {
-                    title: 'Book-Admin',
-                    noAuth: true
+                    title: 'Book-Admin'
                 },
                 component: () => import('../views/admin/bookAdmin.vue')
             },
@@ -68,8 +73,7 @@ const routes: RouteRecordRaw[] = [
                 path: 'user',
                 name: 'user',
                 meta: {
-                    title: 'User-Admin',
-                    noAuth: true
+                    title: 'User-Admin'
                 },
                 component: () => import('../views/admin/userAdmin.vue')
             }
@@ -95,7 +99,7 @@ const routes: RouteRecordRaw[] = [
         path: '/journey',
         meta: {
             title: 'Journey',
-            noAuth: true
+            noAuth: true,
         },
         component: () => import(/* webpackChunkName: "register" */ '../views/pages/journey.vue'),
     },
@@ -141,10 +145,12 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     NProgress.start();
-    const role = localStorage.getItem('vuems_name');
-
-    if (!role && to.meta.noAuth !== true) {
+    const admin = localStorage.getItem('vuems_admin');
+    const token = localStorage.getItem('vuems_token');
+    if (!token && to.path !== '/login' && to.path !== '/register') {
         next('/login');
+    } else if(!admin && !to.meta.noAuth){
+        next('/403');
     } else {
         next();
     }

@@ -18,6 +18,7 @@
                         <el-dropdown-menu>
                             <el-dropdown-item command="user">Profile</el-dropdown-item>
                             <el-dropdown-item divided command="loginout">Log out</el-dropdown-item>
+                            <el-dropdown-item divided command="bookshelf">Book Shelf</el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
                 </el-dropdown>
@@ -38,9 +39,13 @@ const router = useRouter();
 const handleCommand = (command: string) => {
     if (command == 'loginout') {
         localStorage.removeItem('vuems_name');
+        localStorage.removeItem('vuems_admin');
+        localStorage.removeItem('vuems_token');
         router.push('/login');
     } else if (command == 'user') {
         router.push('/ucenter');
+    } else if (command == 'bookshelf') {
+        router.push('/home/recommendation');
     }
 };
 

@@ -18,6 +18,7 @@
                         <el-dropdown-menu>
                             <el-dropdown-item command="user">Profile</el-dropdown-item>
                             <el-dropdown-item divided command="loginout">Log out</el-dropdown-item>
+                            <el-dropdown-item divided command="admin" v-if="admin">Admin Pannel</el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
                 </el-dropdown>
@@ -31,17 +32,21 @@ import { useRouter } from 'vue-router';
 import { UserFilled } from '@element-plus/icons-vue'
 
 const username: string | null = localStorage.getItem('vuems_name');
+const admin  = localStorage.getItem('vuems_admin');
 
 const sidebar = useSidebarStore();
 
 const router = useRouter();
 const handleCommand = (command: string) => {
     if (command == 'loginout') {
+        router.push('/login');
         localStorage.removeItem('vuems_name');
         localStorage.removeItem('vuems_token');
-        router.push('/login');
+        localStorage.removeItem('vuems_admin');
     } else if (command == 'user') {
         router.push('/home/ucenter');
+    } else if (command == 'admin'){
+        router.push('/admin');
     }
 };
 

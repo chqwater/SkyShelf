@@ -33,10 +33,10 @@
                     <el-checkbox class="pwd-checkbox" v-model="checked" label="Remember password" />
                     <el-link type="primary" @click="$router.push('/reset-pwd')">Forgot </el-link>
                 </div> -->
-                <el-button class="login-btn" type="primary" size="large" @click="submitForm(login)">Login</el-button>
+                <el-button class="login-btn" size="large" @click="submitForm(login)">Login</el-button>
                 <p class="login-tips">Tips : rules to be declared</p>
                 <p class="login-text">
-                    No account?--<el-link type="primary" @click="$router.push('/register')">Sign Up</el-link>
+                    No account?--<span class="navi-btn" @click="$router.push('/register')" style="color: white; text-decoration: underline;">Sign Up</span>
                 </p>
             </el-form>
         </div>
@@ -48,6 +48,7 @@ import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import type { FormInstance, FormRules } from 'element-plus';
+
 
 interface LoginInfo {
     email: string;
@@ -82,6 +83,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
             ElMessage.success('login successful');
             localStorage.setItem('vuems_token', "JWT_TOKEN");
             localStorage.setItem('vuems_name', param.email);
+            // localStorage.setItem('vuems_admin', "admin");
             router.push('/');
             if (checked.value) {
                 localStorage.setItem('login-param', JSON.stringify(param));
@@ -100,11 +102,14 @@ const submitForm = (formEl: FormInstance | undefined) => {
 <style scoped>
 .login-bg {
     display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 100vh;
-    background: url(../../assets/img/login-bg.jpg) center/cover no-repeat;
+    background: url(../../assets/img/bg-bp.jpg) center/cover no-repeat;
 }
 
 .login-header {
@@ -113,32 +118,53 @@ const submitForm = (formEl: FormInstance | undefined) => {
     justify-content: center;
     margin-bottom: 40px;
 }
+.login-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.6);
+    z-index: 1;
+}
+
+.login-bg > * {
+    position: relative;
+    z-index: 2;
+}
 
 .logo {
     width: 35px;
 }
 
 .login-title {
-    font-size: 22px;
-    color: #333;
+    font-size: 30px;
+    color: white;
     font-weight: bold;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .login-container {
-    width: 450px;
-    border-radius: 5px;
-    background: #fff;
+    width: 380px;
+    border-radius: 35px;
+    background: linear-gradient(45deg, #409EFF, rgb(94, 69, 159));
     padding: 40px 50px 50px;
-    box-sizing: border-box;
 }
-
+.login-container:hover{
+    width: 482px;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    background-clip: padding-box;
+    box-shadow: 0 0 90px rgba(64, 158, 255, 1.5), inset 0 0 15px rgba(94, 69, 159, 0.4); 
+}
 .pwd-tips {
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 14px;
     margin: -10px 0 10px;
-    color: #787878;
+    color: white;
 }
 
 .pwd-checkbox {
@@ -152,7 +178,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
 
 .login-tips {
     font-size: 12px;
-    color: #999;
+    color: white;
 }
 
 .login-text {
@@ -160,6 +186,39 @@ const submitForm = (formEl: FormInstance | undefined) => {
     align-items: center;
     margin-top: 20px;
     font-size: 14px;
-    color: #787878;
+    color: white;
+}
+:deep().el-input__wrapper {
+  background-color: transparent;
+  color: white;
+  border: transparent;
+  border-radius: 50px;
+}
+:deep().el-input__inner{
+    color: white;
+}
+:deep().el-input-group__prepend{
+    background-color: transparent;
+    color: white;
+    border-radius: 50px;
+}
+:deep().el-button{
+    background-color: transparent;
+    border-radius: 50px;
+    font-size: 20px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+}
+:deep().el-button:hover{
+    color: aqua;
+    box-shadow: 0 0 10px 5px white;
+}
+.navi-btn{
+    cursor: pointer;
+}
+.navi-btn:hover{
+    color: aqua  !important;
 }
 </style>

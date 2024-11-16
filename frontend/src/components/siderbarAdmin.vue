@@ -8,7 +8,7 @@
         >
             <template v-for="item in menuAdmin">
                 <template v-if="item.children">
-                    <el-sub-menu :index="item.index" :key="item.index" v-permiss="item.id">
+                    <el-sub-menu :index="item.index" :key="item.index">
                         <template #title>
                             <el-icon>
                                 <component :is="item.icon"></component>
@@ -20,7 +20,6 @@
                                 v-if="subItem.children"
                                 :index="subItem.index"
                                 :key="subItem.index"
-                                v-permiss="item.id"
                             >
                                 <template #title>{{ subItem.title }}</template>
                                 <el-menu-item
@@ -31,14 +30,14 @@
                                     {{ threeItem.title }}
                                 </el-menu-item>
                             </el-sub-menu>
-                            <el-menu-item v-else :index="subItem.index" v-permiss="item.id">
+                            <el-menu-item v-else :index="subItem.index">
                                 {{ subItem.title }}
                             </el-menu-item>
                         </template>
                     </el-sub-menu>
                 </template>
                 <template v-else>
-                    <el-menu-item :index="item.index" :key="item.index" v-permiss="item.id">
+                    <el-menu-item :index="item.index" :key="item.index">
                         <el-icon>
                             <component :is="item.icon"></component>
                         </el-icon>
