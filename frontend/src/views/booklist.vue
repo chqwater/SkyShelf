@@ -1,7 +1,7 @@
 <template>
     <div class="content-box-book">
       <div class="book" v-for="item in prop.bookList">
-        <div class="cover" @click="" >
+        <div class="cover" @click="openBook(item)" >
             <img :src="item.cover" alt="" style="width: 100%; height: 100%;">
         </div>
         <div class="title-b">
@@ -13,15 +13,31 @@
 
 <script setup lang="ts" name="booklist">
 import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const prop = reactive({
     bookList: [
         {
         name: "Harry Potter",
-        cover: "https://static.posters.cz/image/750webp/214933.webp"
+        bookid: 1,
+        cover: "https://static.posters.cz/image/750webp/214933.webp",
+        url: "https://kvongcmehsanalibrary.wordpress.com/wp-content/uploads/2021/07/harrypotter.pdf",
+        currentPage: 0
         }
     ]
 })
+
+const openBook = (data:any)=>{
+    router.push({
+        path: '/bookcontent',
+        query: {
+            bookurl: data.url,
+            bookid: data.bookid,
+            currentPage: data.currentPage
+        }
+    })
+}
 </script>
 
 <style scoped>

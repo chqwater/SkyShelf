@@ -20,7 +20,7 @@ git clone https://github.com/chqwater/SkyShelf.git
 Navigate into the project directory, enter the frontend directory:
 
 ```bash
-cd <project-folder>
+cd SkyShelf
 cd frontend
 ```
 

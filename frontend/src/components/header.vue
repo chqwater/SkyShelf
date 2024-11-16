@@ -1,6 +1,7 @@
 <template>
     <div class="header">
         <div class="header-left">
+            <img src="../../public/skys.jpg" alt="" style="height:30px">
             <div class="web-title">SkyShelf</div>
         </div>
         <div class="header-right">
@@ -37,6 +38,7 @@ const router = useRouter();
 const handleCommand = (command: string) => {
     if (command == 'loginout') {
         localStorage.removeItem('vuems_name');
+        localStorage.removeItem('vuems_token');
         router.push('/login');
     } else if (command == 'user') {
         router.push('/home/ucenter');

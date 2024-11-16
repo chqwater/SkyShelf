@@ -5,11 +5,11 @@
                 <div class="login-title">SkyShelf</div>
             </div>
             <el-form :model="param" :rules="rules" ref="login" size="large">
-                <el-form-item prop="username">
-                    <el-input v-model="param.username" placeholder="Username">
+                <el-form-item prop="email">
+                    <el-input v-model="param.email" placeholder="Email">
                         <template #prepend>
                             <el-icon>
-                                <User />
+                                <Message />
                             </el-icon>
                         </template>
                     </el-input>
@@ -45,13 +45,12 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
-import { usePermissStore } from '@/store/permiss';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import type { FormInstance, FormRules } from 'element-plus';
 
 interface LoginInfo {
-    username: string;
+    email: string;
     password: string;
 }
 
@@ -61,30 +60,28 @@ const checked = ref(lgStr ? true : false);
 
 const router = useRouter();
 const param = reactive<LoginInfo>({
-    username: defParam ? defParam.username : '',
+    email: defParam ? defParam.email : '',
     password: defParam ? defParam.password : '',
 });
 
 const rules: FormRules = {
-    username: [
+    email: [
         {
             required: true,
-            message: 'please enter username',
+            message: 'please enter email',
             trigger: 'blur',
         },
     ],
     password: [{ required: true, message: 'enter password', trigger: 'blur' }],
 };
-const permiss = usePermissStore();
 const login = ref<FormInstance>();
 const submitForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return;
     formEl.validate((valid: boolean) => {
         if (valid) {
             ElMessage.success('login successful');
-            localStorage.setItem('vuems_name', param.username);
-            const keys = permiss.defaultList[param.username == 'admin' ? 'admin' : 'user'];
-            permiss.handleSet(keys);
+            localStorage.setItem('vuems_token', "JWT_TOKEN");
+            localStorage.setItem('vuems_name', param.email);
             router.push('/');
             if (checked.value) {
                 localStorage.setItem('login-param', JSON.stringify(param));

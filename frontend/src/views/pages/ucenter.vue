@@ -1,6 +1,7 @@
 <template>
-    <div>
-        
+    <div class="user-center-box">
+        <div></div>
+        <div>change jorney</div>
     </div>
 </template>
 

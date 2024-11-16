@@ -5,9 +5,9 @@
         <p style="font-size: 40px; ">Welcome to SkyShelf!</p>
         <p style="font-size: 20px;">please choose your journey!</p>
       </div>
-      <div class="options">
-        <el-checkbox label="Example Option" size="large" border/>
-      </div>
+      <el-checkbox-group v-model="checkedJourney" :max="1" class="options">
+        <el-checkbox :label="item" size="large" border v-for="(item, index) in journey" :key="index" style="width: 400px; margin: 10px 0 10px 0;"/>
+      </el-checkbox-group>
     </div>
     <div class="start-btn">
       <el-button type="primary" @click="handleStart">Start</el-button>
@@ -16,12 +16,25 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-
+const journey = [
+  "Literary Fiction",
+  "Philosophy",
+  "Fantasy",
+  "Science Fiction",
+  "Poetry",
+  "Mystery & Thriller",
+  "Biography & Memoirs",
+  "Self-Help & Psychology",
+  "Historical Fiction",
+  "Adventure & Travel"
+];
+const checkedJourney = ref([])
 const handleStart = ()=>{
-  router.push('/recommendation')
+  router.push('/home/recommendation')
 }
 </script>
 
@@ -51,9 +64,14 @@ const handleStart = ()=>{
 .start-btn{
   position: fixed;
   left: 50%;
-  bottom: 20px;
+  bottom: 200px;
 }
 .options{
-  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  margin-left: calc((100% - 500px)/2);
+  justify-content: center;
+  align-items: center
 }
 </style>

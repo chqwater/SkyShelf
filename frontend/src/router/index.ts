@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import { usePermissStore } from '../store/permiss';
 import Home from '../views/home.vue';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
@@ -8,7 +7,10 @@ import AdminHome from '@/views/admin/adminHome.vue';
 const routes: RouteRecordRaw[] = [
     {
         path: '/',
-        redirect: '/home',
+        redirect: (to) => {
+            const token = localStorage.getItem('vuems_token');
+            return token ? '/home/recommendation' : '/login';
+        },
     },
     {
         path: '/home',
@@ -42,6 +44,11 @@ const routes: RouteRecordRaw[] = [
                 component: () => import('../views/pages/ucenter.vue'),
             }
         ],
+    },
+    {
+        path: '/bookcontent',
+        name: 'bookPage',
+        component: () => import('../components/bookPage.vue')
     },
     {
         path: '/admin',
@@ -135,12 +142,9 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     NProgress.start();
     const role = localStorage.getItem('vuems_name');
-    const permiss = usePermissStore();
 
     if (!role && to.meta.noAuth !== true) {
         next('/login');
-    } else if (typeof to.meta.permiss == 'string' && !permiss.key.includes(to.meta.permiss)) {
-        next('/403');
     } else {
         next();
     }

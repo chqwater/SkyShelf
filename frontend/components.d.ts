@@ -8,6 +8,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AdminHeader: typeof import('./src/components/adminHeader.vue')['default']
+    BookPage: typeof import('./src/components/bookPage.vue')['default']
     Countup: typeof import('./src/components/countup.vue')['default']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElButton: typeof import('element-plus/es')['ElButton']
