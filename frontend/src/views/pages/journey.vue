@@ -5,15 +5,16 @@
         <p style="font-size: 40px; ">Welcome to SkyShelf!</p>
         <p >We would like to know your prefrence😊</p>
       </div>
-      <el-checkbox-group v-model="checkedJourney" :max="1" class="options">
-        <el-checkbox :label="item" size="large" border v-for="(item, index) in journey" :key="index" style="width: 100%; margin: 10px 0 10px 0;"/>
-      </el-checkbox-group>
+      <ElCheckboxGroup v-model="checkedJourney" :max="1" class="options">
+        <ElCheckbox :label="item" size="large" border v-for="(item, index) in journey" :key="index" style="width: 100%; margin: 10px 0 10px 0;"/>
+      </ElCheckboxGroup>
       <div class="start-btn" @click="handleStart" style="width: 200px;">Start</div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ElCheckbox, ElCheckboxGroup } from 'element-plus';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -40,7 +41,7 @@ const handleStart = ()=>{
 .content-back{
   display: flex;
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   background-color:aliceblue;
   position: fixed;
   top: 0%;
@@ -48,10 +49,12 @@ const handleStart = ()=>{
   background: url(../../assets/img/bg-bp.jpg) center/cover no-repeat;
   justify-content: center;
   align-items: center;
+  overflow-y: scroll;
 }
 .content-back::before {
     content: '';
     position: absolute;
+    height: 100%;
     top: 0;
     left: 0;
     width: 100%;
@@ -65,7 +68,7 @@ const handleStart = ()=>{
     z-index: 2;
 }
 .welcome-box{
-  width: 1150px;
+  width: 900px;
   min-height: 900px;
   height: 900px;
   display: flex;
@@ -75,7 +78,7 @@ const handleStart = ()=>{
   border-radius: 50px;
 }
 .welcome-box:hover{
-  width: 1152px;
+  width: 902px;
   box-sizing: border-box;
   border: 1px solid transparent;
   background-clip: padding-box;
@@ -107,6 +110,8 @@ const handleStart = ()=>{
 }
 :deep().el-checkbox.is-bordered{
   border-radius: 50px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: 700;
 }
 .start-btn{
   cursor: pointer;

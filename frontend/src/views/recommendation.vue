@@ -1,16 +1,17 @@
 <template>
     <div class="content-box-reco">
       <div class="search-bar">
-        <el-input style="width: 800px"
+        <ElInput style="width: 800px"
       size="large"
       placeholder="Search book here"
-      :suffix-icon="Search"></el-input>
+      :suffix-icon="Search"></ElInput>
       </div>
     </div>
 </template>
 
 <script setup lang="ts" name="recommendation">
 import { Search } from '@element-plus/icons-vue'
+import { ElInput } from 'element-plus';
 </script>
 
 <style>

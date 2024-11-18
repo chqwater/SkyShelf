@@ -30,7 +30,7 @@
 import { useSidebarStore } from '../store/sidebar';
 import { useRouter } from 'vue-router';
 import { UserFilled } from '@element-plus/icons-vue'
-import { ElAvatar, ElDescriptionsItem, ElDropdown, ElDropdownItem, ElIcon } from 'element-plus';
+import { ElAvatar, ElDropdown, ElDropdownItem, ElIcon } from 'element-plus';
 
 const username: string | null = localStorage.getItem('vuems_name');
 const admin  = localStorage.getItem('vuems_admin');

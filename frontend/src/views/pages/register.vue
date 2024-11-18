@@ -4,16 +4,16 @@
             <div class="login-header">
                 <div class="login-title">SkyShelf</div>
             </div>
-            <el-form :model="param" :rules="rules" ref="register" size="large">
-                <el-form-item prop="username">
-                    <el-input v-model="param.username" placeholder="Username">
+            <ElForm :model="param" :rules="rules" ref="register" size="large">
+                <ElFormItem prop="username">
+                    <ElInput v-model="param.username" placeholder="Username">
                         <template #prepend>
-                            <el-icon>
+                            <ElIcon>
                                 <User />
-                            </el-icon>
+                            </ElIcon>
                         </template>
-                    </el-input>
-                </el-form-item>
+                    </ElInput>
+                </ElFormItem>
                 <el-form-item prop="email">
                     <el-input v-model="param.email" placeholder="Email">
                         <template #prepend>
@@ -38,11 +38,11 @@
                         </template>
                     </el-input>
                 </el-form-item>
-                <el-button class="login-btn" size="large" @click="submitForm(register)">Register</el-button>
+                <ElButton class="login-btn" size="large" @click="submitForm(register)">Register</ElButton>
                 <p class="login-text">
                     Already registered?--<span class="navi-btn" @click="$router.push('/login')" style="color: white; text-decoration: underline;">back to login</span>
                 </p>
-            </el-form>
+            </ElForm>
         </div>
     </div>
 </template>
@@ -50,7 +50,7 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
-import { ElMessage, type FormInstance, type FormRules } from 'element-plus';
+import { ElButton, ElForm, ElFormItem, ElIcon, ElInput, ElMessage, type FormInstance, type FormRules } from 'element-plus';
 import { Register } from '../../types/user';
 
 const router = useRouter();
@@ -80,7 +80,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
             localStorage.setItem('vuems_token', "JWT_TOKEN");
             router.push('/journey');
         } else {
-            return false;
+            return;
         }
     });
 };
