@@ -1,6 +1,6 @@
 <template>
     <div class="sidebar">
-        <el-menu
+        <ElMenu
             class="sidebar-el-menu"
             :default-active="onRoutes"
             :collapse="sidebar.collapse"
@@ -8,7 +8,7 @@
         >
             <template v-for="item in menuData">
                 <template v-if="item.children">
-                    <el-sub-menu :index="item.index" :key="item.index">
+                    <ElSubMenu :index="item.index" :key="item.index">
                         <template #title>
                             <el-icon>
                                 <component :is="item.icon"></component>
@@ -16,36 +16,36 @@
                             <span>{{ item.title }}</span>
                         </template>
                         <template v-for="subItem in item.children">
-                            <el-sub-menu
+                            <ElSubMenu
                                 v-if="subItem.children"
                                 :index="subItem.index"
                                 :key="subItem.index"
                             >
                                 <template #title>{{ subItem.title }}</template>
-                                <el-menu-item
+                                <ElMenuItem
                                     v-for="(threeItem, i) in subItem.children"
                                     :key="i"
                                     :index="threeItem.index"
                                 >
                                     {{ threeItem.title }}
-                                </el-menu-item>
-                            </el-sub-menu>
+                                </ElMenuItem>
+                            </ElSubMenu>
                             <el-menu-item v-else :index="subItem.index">
                                 {{ subItem.title }}
                             </el-menu-item>
                         </template>
-                    </el-sub-menu>
+                    </ElSubMenu>
                 </template>
                 <template v-else>
                     <el-menu-item :index="item.index" :key="item.index">
-                        <el-icon>
+                        <ElIcon>
                             <component :is="item.icon"></component>
-                        </el-icon>
+                        </ElIcon>
                         <template #title>{{ item.title }}</template>
                     </el-menu-item>
                 </template>
             </template>
-        </el-menu>
+        </ElMenu>
         <div class="collapse-btn" @click="collapseChage">
           <el-icon v-if="sidebar.collapse">
             <Expand />
@@ -62,7 +62,8 @@ import { computed } from 'vue';
 import { useSidebarStore } from '../store/sidebar';
 import { useRoute } from 'vue-router';
 import { onMounted } from 'vue';
-import { menuData } from '@/components/menu';
+import { menuData } from '../components/menu';
+import { ElIcon, ElMenu, ElMenuItem, ElSubMenu } from 'element-plus';
 
 const route = useRoute();
 const onRoutes = computed(() => {

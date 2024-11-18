@@ -2,7 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import Home from '../views/home.vue';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-import AdminHome from '@/views/admin/adminHome.vue';
+import AdminHome from '../views/admin/adminHome.vue';
 
 
 const routes: RouteRecordRaw[] = [

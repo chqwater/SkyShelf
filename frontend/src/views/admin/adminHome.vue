@@ -8,9 +8,9 @@
     </div>
 </template>
 <script setup lang="ts">
-import { useSidebarStore } from '@/store/sidebar';
-import vHeader from '@/components/adminHeader.vue';
-import vSidebar from '@/components/siderbarAdmin.vue';
+import { useSidebarStore } from '../../store/sidebar';
+import vHeader from '../../components/adminHeader.vue';
+import vSidebar from '../../components/siderbarAdmin.vue';
 
 const sidebar = useSidebarStore();
 </script>

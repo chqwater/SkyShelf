@@ -4,18 +4,18 @@
             <div class="login-header">
                 <div class="login-title">SkyShelf</div>
             </div>
-            <el-form :model="param" :rules="rules" ref="login" size="large">
-                <el-form-item prop="email">
-                    <el-input v-model="param.email" placeholder="Email">
+            <ElForm :model="param" :rules="rules" ref="login" size="large">
+                <ElFormItem prop="email">
+                    <ElInput v-model="param.email" placeholder="Email">
                         <template #prepend>
-                            <el-icon>
+                            <ElIcon>
                                 <Message />
-                            </el-icon>
+                            </ElIcon>
                         </template>
-                    </el-input>
-                </el-form-item>
-                <el-form-item prop="password">
-                    <el-input
+                    </ElInput>
+                </ElFormItem>
+                <ElFormItem prop="password">
+                    <ElInput
                         type="password"
                         placeholder="Password"
                         v-model="param.password"
@@ -23,22 +23,22 @@
                         @keyup.enter="submitForm(login)"
                     >
                         <template #prepend>
-                            <el-icon>
+                            <ElIcon>
                                 <Lock />
-                            </el-icon>
+                            </ElIcon>
                         </template>
-                    </el-input>
-                </el-form-item>
+                    </ElInput>
+                </ElFormItem>
                 <!-- <div class="pwd-tips">
                     <el-checkbox class="pwd-checkbox" v-model="checked" label="Remember password" />
                     <el-link type="primary" @click="$router.push('/reset-pwd')">Forgot </el-link>
                 </div> -->
-                <el-button class="login-btn" size="large" @click="submitForm(login)">Login</el-button>
+                <ElButton class="login-btn" size="large" @click="submitForm(login)">Login</ElButton>
                 <p class="login-tips">Tips : rules to be declared</p>
                 <p class="login-text">
                     No account?--<span class="navi-btn" @click="$router.push('/register')" style="color: white; text-decoration: underline;">Sign Up</span>
                 </p>
-            </el-form>
+            </ElForm>
         </div>
     </div>
 </template>
@@ -46,7 +46,7 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
-import { ElMessage } from 'element-plus';
+import { ElIcon, ElMessage, ElInput, ElButton, ElForm, ElFormItem } from 'element-plus';
 import type { FormInstance, FormRules } from 'element-plus';
 
 
@@ -92,7 +92,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
             }
         } else {
             ElMessage.error('login failed');
-            return false;
+            return;
         }
     });
 };

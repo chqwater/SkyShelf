@@ -62,7 +62,7 @@ import { computed } from 'vue';
 import { useSidebarStore } from '../store/sidebar';
 import { useRoute } from 'vue-router';
 import { onMounted } from 'vue';
-import { menuAdmin } from '@/components/menu';
+import { menuAdmin } from '../components/menu';
 
 const route = useRoute();
 const onRoutes = computed(() => {

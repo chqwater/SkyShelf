@@ -51,7 +51,7 @@
 import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus';
-import { Register } from '@/types/user';
+import { Register } from '../../types/user';
 
 const router = useRouter();
 const param = reactive<Register>({

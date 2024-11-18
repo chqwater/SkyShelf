@@ -6,22 +6,22 @@
         </div>
         <div class="header-right">
             <div class="header-user-con">
-                <el-avatar class="user-avator" :size="40" :icon="UserFilled"></el-avatar>
-                <el-dropdown class="user-name" trigger="click" @command="handleCommand">
+                <ElAvatar class="user-avator" :size="40" :icon="UserFilled"></ElAvatar>
+                <ElDropdown class="user-name" trigger="click" @command="handleCommand">
                     <span class="el-dropdown-link">
                         {{ username }}
-                        <el-icon class="el-icon--right">
+                        <ElIcon class="el-icon--right">
                             <arrow-down />
-                        </el-icon>
+                        </ElIcon>
                     </span>
                     <template #dropdown>
                         <el-dropdown-menu>
-                            <el-dropdown-item command="user">Profile</el-dropdown-item>
-                            <el-dropdown-item divided command="loginout">Log out</el-dropdown-item>
-                            <el-dropdown-item divided command="admin" v-if="admin">Admin Pannel</el-dropdown-item>
+                            <ElDropdownItem command="user">Profile</ElDropdownItem>
+                            <ElDropdownItem divided command="loginout">Log out</ElDropdownItem>
+                            <ElDropdownItem divided command="admin" v-if="admin">Admin Pannel</ElDropdownItem>
                         </el-dropdown-menu>
                     </template>
-                </el-dropdown>
+                </ElDropdown>
             </div>
         </div>
     </div>
@@ -30,6 +30,7 @@
 import { useSidebarStore } from '../store/sidebar';
 import { useRouter } from 'vue-router';
 import { UserFilled } from '@element-plus/icons-vue'
+import { ElAvatar, ElDescriptionsItem, ElDropdown, ElDropdownItem, ElIcon } from 'element-plus';
 
 const username: string | null = localStorage.getItem('vuems_name');
 const admin  = localStorage.getItem('vuems_admin');

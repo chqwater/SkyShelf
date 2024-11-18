@@ -12,9 +12,9 @@
     </div>
 </template>
 <script setup lang="ts">
-import { useSidebarStore } from '@/store/sidebar';
-import vHeader from '@/components/header.vue';
-import vSidebar from '@/components/sidebar.vue';
+import { useSidebarStore } from '../store/sidebar';
+import vHeader from '../components/header.vue';
+import vSidebar from '../components/sidebar.vue';
 import { useRouter } from 'vue-router';
 
 const sidebar = useSidebarStore();
