@@ -6,7 +6,7 @@
         <div class="contact-options">
             <div class="addr suboption">
                 <div class="icon">
-                    <el-icon :size="50"><LocationInformation /></el-icon>
+                    <ElIcon :size="50"><LocationInformation /></ElIcon>
                     <p class="option-desc">ADDRESS</p>
                 </div>
                 <div class="info">
@@ -46,6 +46,8 @@
 </template>
 
 <script setup>
+import { ElIcon } from 'element-plus';
+
 const handleBack = ()=>{
     window.history.back();
 }

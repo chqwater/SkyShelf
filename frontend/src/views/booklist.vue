@@ -23,7 +23,7 @@ const prop = reactive({
         bookid: 1,
         cover: "https://static.posters.cz/image/750webp/214933.webp",
         url: "https://kvongcmehsanalibrary.wordpress.com/wp-content/uploads/2021/07/harrypotter.pdf",
-        currentPage: 0
+        currentPage: 100
         }
     ]
 })
@@ -32,9 +32,10 @@ const openBook = (data:any)=>{
     router.push({
         path: '/bookcontent',
         query: {
-            bookurl: data.url,
+            bookurl: "https://corsproxy.io/?"+data.url,
             bookid: data.bookid,
-            currentPage: data.currentPage
+            currentPage: data.currentPage,
+            name: data.name
         }
     })
 }

@@ -62,7 +62,7 @@ const handleCommand = (command: string) => {
     height: 70px;
     color: var(--header-text-color);
     background-color: #fff;     
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);  
     position: fixed;     
     top: 0;
     left: 0;
