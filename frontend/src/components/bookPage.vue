@@ -1,6 +1,10 @@
 <template>
-  <div class="page-box-book">
-    <div class="app-header">
+  <div class="page-box-book" v-loading.fullscreen.lock="isLoading">
+    <div class="app-header" v-if="isLoading">
+      <div class="home-btn" @click="handleBackToShelf"><ElIcon size="15"><CaretLeft/></ElIcon>Back to my shelf</div>
+      <p class="book-name">Loading...</p>
+    </div>
+    <div class="app-header" v-else>
       <div class="home-btn" @click="handleBackToShelf"><ElIcon size="15"><CaretLeft/></ElIcon>Back to my shelf</div>
       <p class="book-name">{{ route.query.name }}</p>
       <p class="page-info">{{ pageCount }} Pages in total</p>
@@ -35,6 +39,7 @@ import { ref, onMounted, watch } from "vue";
 import VuePdfEmbed from "vue-pdf-embed";
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
+import { ElNotification as notify } from 'element-plus'
 
 const router = useRouter();
 const route = useRoute();
@@ -49,6 +54,13 @@ const secondpdfRef = ref(null);
 
 const handleBackToShelf = ()=>{
   router.push('/home/booklist');
+  notify({
+    title: 'Reading Progress Saved for ' + route.query.name,
+    duration: 3000,
+    message: 'Dont worry! You will continue from the page you left.',
+    type: 'success',
+    offset: 60
+  })
 }
 const handleNextPage = () => {
   if ( page.value + 1 >= pageCount.value){
@@ -116,7 +128,7 @@ onMounted(() => {
   margin-left: calc((100% - 1130px) / 2);
   background-color: white;
   justify-content: center;
-  margin-top: 40px;
+  margin-top: 30px;
   position: relative;
   min-height: 800px;
 }
@@ -128,7 +140,6 @@ onMounted(() => {
   background-color: rgb(255, 255, 235);
   box-shadow: 0 4px 6px rgba(87, 87, 87, 0.2); 
   position: relative;
-  
 }
 .btn{
   border: 2px solid white;
@@ -163,5 +174,8 @@ onMounted(() => {
   font-size: 16px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   color: rgb(76, 76, 76);
+}
+.el-loading-mask {
+  z-index: 9999;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <div class="header-left">
+        <div class="header-left" @click="hanleHome">
             <img src="../../public/skys.jpg" alt="" style="height:30px">
             <div class="web-title">SkyShelf</div>
         </div>
@@ -36,6 +36,9 @@ const username: string | null = localStorage.getItem('vuems_name');
 const admin  = localStorage.getItem('vuems_admin');
 
 const sidebar = useSidebarStore();
+const hanleHome = ()=>{
+    router.push('/home/booklist');
+}
 
 const router = useRouter();
 const handleCommand = (command: string) => {
@@ -68,6 +71,7 @@ const handleCommand = (command: string) => {
     left: 0;
     width: 100%;
     z-index: 1000; 
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .header-left {
@@ -75,6 +79,7 @@ const handleCommand = (command: string) => {
     align-items: center;
     padding-left: 20px;
     height: 100%;
+    cursor: pointer;
 }
 
 .logo {

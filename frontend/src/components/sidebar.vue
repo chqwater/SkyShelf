@@ -81,20 +81,22 @@ onMounted(() => {
 });
 </script>
 
-<style scoped >
+<style scoped>
 .sidebar {
     display: block;
     position: absolute;
     left: 0;
-    top: 70px;
+    top: 68px;
     bottom: 50px;
-    overflow-y: scroll;
+    overflow-y: hidden;
     padding-top: 10px;
     overflow-x: hidden;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 700;
 }
 .collapse-btn {
 	position: absolute;
-	bottom: 0%;
+	bottom: 10px;
 	left: 10px;
   display: flex;
   justify-content: left;

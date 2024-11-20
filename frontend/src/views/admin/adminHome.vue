@@ -17,7 +17,8 @@ const sidebar = useSidebarStore();
 
 <style>
 .wrapper {
-    height: 100vh;
+    height: 100%;
+    max-height: 100%;
     overflow: hidden;
 }
 .content-box {

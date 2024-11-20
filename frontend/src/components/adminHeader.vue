@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <div class="header-left">
+        <div class="header-left" @click="hanleHome">
             <div class="web-title">SkyShelf</div>
             <div class="admin-tip">admin</div>
         </div>
@@ -35,6 +35,9 @@ import { ElAvatar, ElDropdown, ElDropdownItem, ElDropdownMenu, ElIcon } from 'el
 const username: string | null = localStorage.getItem('vuems_name');
 
 const sidebar = useSidebarStore();
+const hanleHome = ()=>{
+    router.push('/home/booklist');
+}
 
 const router = useRouter();
 const handleCommand = (command: string) => {
@@ -67,6 +70,7 @@ const handleCommand = (command: string) => {
     left: 0;
     width: 100%;
     z-index: 1000; 
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 .admin-tip{
     position: relative;
@@ -83,6 +87,7 @@ const handleCommand = (command: string) => {
     align-items: center;
     padding-left: 20px;
     height: 100%;
+    cursor: pointer;
 }
 
 .logo {

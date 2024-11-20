@@ -91,6 +91,8 @@ onMounted(() => {
     overflow-y: scroll;
     padding-top: 10px;
     overflow-x: hidden;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 700;
 }
 .collapse-btn {
 	position: absolute;

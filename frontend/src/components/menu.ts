@@ -11,7 +11,7 @@ export const menuData: Menus[] = [
         id: '1',
         title: 'Recommendation',
         index: '/home/recommendation',
-        icon: 'HomeFilled'
+        icon: 'Collection'
     }
 ];
 

@@ -27,8 +27,9 @@ const handleClickContact = ()=>{
 
 <style scoped>
 .wrapper {
-    height: 100vh;
-    overflow: hidden;
+    height: 100%;
+    max-height: 100%;
+    overflow-y: hidden;
 }
 .content-box {
     position: absolute;
@@ -36,7 +37,7 @@ const handleClickContact = ()=>{
     right: 0;
     top: 70px;
     bottom: 0;
-    padding-bottom: 30px;
+    padding-bottom: 50px;
     -webkit-transition: left 0.3s ease-in-out;
     transition: left 0.3s ease-in-out;
     background: #eef0fc;
@@ -54,6 +55,7 @@ const handleClickContact = ()=>{
     justify-content: center;
     align-items: center;
     color: white;
+    z-index: 9999;
 }
 .dec{
     margin: 0;
