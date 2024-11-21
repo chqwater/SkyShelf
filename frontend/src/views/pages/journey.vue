@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { ElCheckbox, ElCheckboxGroup } from 'element-plus';
+import { ElCheckbox, ElCheckboxGroup, ElNotification } from 'element-plus';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -33,7 +33,13 @@ const journey = [
 ];
 const checkedJourney = ref([])
 const handleStart = ()=>{
-  router.push('/home/recommendation')
+  router.push('/home/recommendation');
+  ElNotification({
+    type: 'success',
+    title: 'You have updated your Journey!',
+    duration: 3000,
+    offset: 60
+  })
 }
 </script>
 

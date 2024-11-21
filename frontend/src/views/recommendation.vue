@@ -2,7 +2,7 @@
   <div class="content-box-reco">
     <div class="search-bar">
       <ElInput
-        style="width: 800px"
+        style="width: 100%;"
         size="large"
         placeholder="Search book here"
         :suffix-icon="Search"
@@ -26,11 +26,14 @@
 import { Search } from "@element-plus/icons-vue";
 import { ElCarousel, ElCarouselItem, ElInput } from "element-plus";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const searchTxt = ref("");
 
 const handleOpenBookOverview = (data1:any, data2:any)=>{
   console.log(data1,data2);
+  router.push('/home/overview');
 }
 </script>
 
@@ -42,16 +45,17 @@ const handleOpenBookOverview = (data1:any, data2:any)=>{
   position: relative;
   overflow-y: scroll;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  scroll-snap-type: x mandatory;
 }
 .search-bar {
-  width: 800px;
+  min-width: 800px;
   height: 70px;
   display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
   top: 80px;
-  left: calc((100% - 800px) / 2);
+  left: calc((100% - 600px) / 2);
   z-index: 9999;
 }
 .recomm-card{
@@ -66,6 +70,14 @@ const handleOpenBookOverview = (data1:any, data2:any)=>{
   align-items: center;
   padding: 20px 20px 5px 20px;
   border-radius: 50px;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+.recomm-card:not(:first-child) {
+  margin-left: calc((100% - 940px) / 2 - 150px);
+}
+.recomm-card:last-child {
+  margin-right: calc((100% - 940px) / 2);
 }
 .recomm-card:hover{
   box-shadow: 0 0 90px rgba(64, 158, 255, 1.5), inset 0 0 15px rgba(94, 69, 159, 0.4); 
@@ -91,5 +103,6 @@ const handleOpenBookOverview = (data1:any, data2:any)=>{
 }
 .el-carousel__item{
   border-radius: 50px;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
 }
 </style>

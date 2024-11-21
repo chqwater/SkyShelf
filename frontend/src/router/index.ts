@@ -44,6 +44,15 @@ const routes: RouteRecordRaw[] = [
                     noAuth: true,
                 },
                 component: () => import('../views/pages/ucenter.vue'),
+            },
+            {
+                path: 'overview',
+                name: 'Overview',
+                meta: {
+                    title: 'Overview',
+                    noAuth: true
+                },
+                component: () => import('../components/bookOverview.vue'),
             }
         ],
     },

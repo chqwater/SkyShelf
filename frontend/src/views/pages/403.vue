@@ -5,7 +5,7 @@
             <div class="error-desc">you are not authorized to access this page</div>
             <div class="error-handle">
                 <router-link to="/">
-                    <el-button type="primary" size="large">back to home</el-button>
+                    <ElButton type="primary" size="large">back to home</ElButton>
                 </router-link>
                 <el-button class="error-btn" size="large" @click="goBack">back to last page</el-button>
             </div>
@@ -14,6 +14,7 @@
 </template>
 
 <script setup lang="ts" name="403">
+import { ElButton } from 'element-plus';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();

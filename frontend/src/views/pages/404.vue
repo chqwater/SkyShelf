@@ -5,15 +5,16 @@
             <div class="error-desc">page does not exist</div>
             <div class="error-handle">
                 <router-link to="/">
-                    <el-button type="primary" size="large">back to home</el-button>
+                    <ElButton type="primary" size="large">back to home</ElButton>
                 </router-link>
-                <el-button class="error-btn" size="large" @click="goBack">back to the last page</el-button>
+                <ElButton class="error-btn" size="large" @click="goBack">back to the last page</ElButton>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts" name="404">
+import { ElButton } from 'element-plus';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();

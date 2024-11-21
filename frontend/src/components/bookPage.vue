@@ -1,15 +1,29 @@
 <template>
-  <div class="page-box-book" v-loading.fullscreen.lock="isLoading">
-    <div class="app-header" v-if="isLoading">
-      <div class="home-btn" @click="handleBackToShelf"><ElIcon size="15"><CaretLeft/></ElIcon>Back to my shelf</div>
-      <p class="book-name">Loading...</p>
-    </div>
-    <div class="app-header" v-else>
-      <div class="home-btn" @click="handleBackToShelf"><ElIcon size="15"><CaretLeft/></ElIcon>Back to my shelf</div>
-      <p class="book-name">{{ route.query.name }}</p>
+  <div class="page-box-book">
+    <div class="app-header">
+      <div class="home-btn">
+        <ElBreadcrumb separator="/">
+          <ElBreadcrumbItem :to="{path: '/home/booklist'}" style="font-size: 20px;"><p @click="handleBackToShelf">< My Shelf</p></ElBreadcrumbItem>
+          <ElBreadcrumbItem v-if="isLoading"><p class="book-name">Loading...</p></ElBreadcrumbItem>
+          <ElBreadcrumbItem v-else><p class="book-name">{{ route.query.name }}</p></ElBreadcrumbItem>
+        </ElBreadcrumb>
+      </div>
+      <div class="tool-bar">
+        <div class="tool-btn">
+          <ElIcon :size="30"><Guide/></ElIcon>
+        </div>
+        <div class="tool-btn">
+          <ElIcon :size="30"><Checked/></ElIcon>
+        </div>
+        <div class="tool-btn">
+          <ElIcon :size="30"><Download/></ElIcon>
+        </div>
+        <div class="tool-btn">
+          <ElIcon :size="30"><Guide/></ElIcon>
+        </div>
+      </div>
       <p class="page-info">{{ pageCount }} Pages in total</p>
     </div>
-
     <div class="app-content">
       <vue-pdf-embed
         ref="pdfRef"
@@ -30,12 +44,15 @@
       <div style="position: absolute; top: -30px; left:0%; color: white; background-color: gray; border-radius: 10px; padding: 5px;">page {{ page }} </div>
       <div style="position: absolute; top: -30px; right:0%; color: white; background-color: gray; border-radius: 10px; padding: 5px">page {{ secondPage }}</div>
     </div>
+    <el-progress :percentage="pagePercentage" :format="format" :text-inside="true" :stroke-width="6" type="circle" :width="90" style="position: fixed; top: 150px; right: 20px;" :show-text="true"/>
+    <p style="position: fixed; top: 110px; right: 10px; color: white">Reading Percentage</p>
+    <p style="position: fixed; top: 170px; right: 50px; color: white">{{ pagePercentage }}%</p>
   </div>
 </template>
 
 <script setup>
-import { ElButton, ElIcon, ElMessage } from "element-plus";
-import { ref, onMounted, watch } from "vue";
+import { ElBreadcrumb, ElBreadcrumbItem, ElButton, ElDropdownMenu, ElIcon, ElMessage, ElProgress } from "element-plus";
+import { ref, onMounted, watch, computed } from "vue";
 import VuePdfEmbed from "vue-pdf-embed";
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
@@ -51,9 +68,12 @@ const showAllPages = ref(false);
 const pdfRef = ref(null);
 const secondpdfRef = ref(null);
 
-
+const format = (percentage) => (percentage === 100 ? 'Finish' : `${percentage}%`)
+const pagePercentage = computed(()=>{
+  const percentage = (page.value / pageCount.value) * 100;
+  return Math.round(percentage);
+})
 const handleBackToShelf = ()=>{
-  router.push('/home/booklist');
   notify({
     title: 'Reading Progress Saved for ' + route.query.name,
     duration: 3000,
@@ -133,6 +153,7 @@ onMounted(() => {
   min-height: 800px;
 }
 .app-header {
+  width: 100%;
   height: 90px;
   display: flex;
   flex-direction: column;
@@ -150,7 +171,7 @@ onMounted(() => {
 }
 .home-btn{
   position: absolute;
-  top: 40%;
+  top: 30%;
   left: 20px;
   cursor: pointer;
   font-size: 20px;
@@ -175,7 +196,26 @@ onMounted(() => {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   color: rgb(76, 76, 76);
 }
-.el-loading-mask {
-  z-index: 9999;
+.tool-bar{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: end;
+  align-items: end;
+  height: 60px;
+}
+.tool-btn{
+  color: rgb(90, 90, 90);
+  border-radius: 50px;
+  border: 1px solid rgb(90, 90, 90);
+  margin-right: 10px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+.tool-btn:hover{
+  color: #409EFF;
+  border: 1px solid #409EFF;
 }
 </style>
