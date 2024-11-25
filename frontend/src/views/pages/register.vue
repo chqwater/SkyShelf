@@ -52,6 +52,7 @@ import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { ElButton, ElForm, ElFormItem, ElIcon, ElInput, ElMessage, type FormInstance, type FormRules } from 'element-plus';
 import { Register } from '../../types/user';
+import { userRegistration } from '../../api/index';
 
 const router = useRouter();
 const param = reactive<Register>({
@@ -74,11 +75,19 @@ const rules: FormRules = {
 const register = ref<FormInstance>();
 const submitForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return;
-    formEl.validate((valid: boolean) => {
+    formEl.validate(async (valid: boolean) => {
         if (valid) {
-            ElMessage.success('registered, please login');
-            localStorage.setItem('vuems_token', "JWT_TOKEN");
-            router.push('/journey');
+            const res = await userRegistration({
+                email: param.email,
+                password: param.password,
+                username: param.username
+            }).then((res) => {
+                localStorage.setItem('vuems_id', res.user_id);
+                localStorage.setItem('vuems_token', "JWT_TOKEN");
+                localStorage.setItem('vuems_name', param.username);
+                localStorage.setItem('vuems_email', param.email);
+                router.push('/journey');
+            })
         } else {
             return;
         }

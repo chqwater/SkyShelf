@@ -1,23 +1,10 @@
 import request from '../utils/request';
 
 
-export const fetchData = () => {
+export function userRegistration(data: any) {
     return request({
-        url: './mock/table.json',
-        method: 'get'
-    });
-};
-
-export const fetchUserData = () => {
-    return request({
-        url: './mock/user.json',
-        method: 'get'
-    });
-};
-
-export const fetchRoleData = () => {
-    return request({
-        url: './mock/role.json',
-        method: 'get'
-    });
-};
+        url: '/api/register',
+        method: 'post',
+        data
+    })
+}

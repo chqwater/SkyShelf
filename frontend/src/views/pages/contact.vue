@@ -23,9 +23,9 @@
                     <p>Frontend:</p>
                     <p style="text-decoration: underline;">chenhq728@gmail.com</p>
                     <p>Backend:</p>
-                    <p style="text-decoration: underline;">to be announced</p>
+                    <p style="text-decoration: underline;">prabhjotkaur.jal03@gmail.com</p>
                     <p>Database:</p>
-                    <p style="text-decoration: underline;">2264720987@qq.com</p>
+                    <p style="text-decoration: underline;">wangyuqi.0116@qq.com</p>
                 </div>
             </div>
             <div class="more suboption">
