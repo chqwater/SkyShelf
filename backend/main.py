@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from api.user_registration import router as registration_router
-from api.user_recommendatins import router as recommendation_router
+from api.user_recommendations import router as recommendation_router
 from api.user_journey import router as journey_router
 from fastapi.middleware.cors import CORSMiddleware
 
