@@ -77,7 +77,7 @@ async def lifespan(app: FastAPI):
 # Pydantic models for validation
 class UpdateJourneyRequest(BaseModel):
     user_id: int
-    journey: int
+    new_journey: list[int]
 
 # API endpoint to update the journey
 @router.post("/api/update-journey")
@@ -87,34 +87,26 @@ async def update_journey(request: UpdateJourneyRequest, db: SessionLocal = Depen
     if not user:
         raise HTTPException(status_code=404, detail=f"User with id {request.user_id} not found")
 
-    # Check if the journey exists
-    journey = db.query(Journey).filter(Journey.categories_id == request.journey).first()
-    if not journey:
-        raise HTTPException(status_code=404, detail=f"Journey with id {request.journey} not found")
+    # Validate each journey ID in the request
+    for journey_id in request.new_journey:
+        journey = db.query(Journey).filter(Journey.categories_id == journey_id).first()
+        if not journey:
+            raise HTTPException(status_code=404, detail=f"Journey with id {journey_id} not found")
 
-    # Check if the user has already selected this journey
-    existing_selection = db.query(UserSelectedCategories).filter(
-        UserSelectedCategories.u_id == request.user_id,
-        UserSelectedCategories.c_id == request.journey
-    ).first()
+    # Remove all existing selections for this user
+    db.query(UserSelectedCategories).filter(UserSelectedCategories.u_id == request.user_id).delete()
 
-    if existing_selection:
-        return {
-            "message": "Journey already selected",
-            "user_id": request.user_id,
-            "journey_id": request.journey
-        }
-
-    # Add new selection
-    new_user_select_journey = UserSelectedCategories(u_id=request.user_id, c_id=request.journey)
-    db.add(new_user_select_journey)
+    # Insert new selections
+    new_selections = [
+        UserSelectedCategories(u_id=request.user_id, c_id=journey_id)
+        for journey_id in request.new_journey
+    ]
+    db.bulk_save_objects(new_selections)
     db.commit()
-    db.refresh(new_user_select_journey)
 
     # Return success response
     return {
         "message": "Journey updated successfully",
         "user_id": request.user_id,
-        "new_journey_id": request.journey
+        "new_journey_ids": request.new_journey
     }
-
