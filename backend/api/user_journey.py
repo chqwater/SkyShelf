@@ -15,16 +15,34 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
 # Database Models
-class User(Base):
-    __tablename__ = "users"
-    id = Column(Integer, primary_key=True, index=True)
-    journey_id = Column(Integer, ForeignKey("journeys.id"), nullable=True)
-    journey = relationship("Journey")
+class UserInf(Base):
+    __tablename__ = "User_inf"
+    user_id = Column(Integer, primary_key=True, index=True)
+    user_email = Column(String(255), unique=True, nullable=False)
+    user_password = Column(String(255), nullable=False)
+    user_name = Column(String(255), nullable=False)
+
+    # Define reverse relationship for better queries
+    selected_categories = relationship("UserSelectedCategories", back_populates="user")
+
 
 class Journey(Base):
-    __tablename__ = "journeys"
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String(255), nullable=False)  # Added length to VARCHAR
+    __tablename__ = "Categories"
+    categories_id = Column(Integer, primary_key=True, index=True)
+    categories_name = Column(String(255), nullable=False)  # Added length to VARCHAR
+
+    # Define reverse relationship for better queries
+    selected_by_users = relationship("UserSelectedCategories", back_populates="journey")
+
+
+class UserSelectedCategories(Base):
+    __tablename__ = "User_selected_categories"
+    u_id = Column(Integer, ForeignKey("User_inf.user_id"), primary_key=True, index=True)
+    c_id = Column(Integer, ForeignKey("Categories.categories_id"), nullable=False)
+
+    # Define relationships
+    journey = relationship("Journey", back_populates="selected_by_users")
+    user = relationship("UserInf", back_populates="selected_categories")
 
 # Create tables (if they don't exist)
 Base.metadata.create_all(bind=engine)
@@ -45,14 +63,15 @@ async def lifespan(app: FastAPI):
         # Check if journeys exist, otherwise seed them
         if not db.query(Journey).first():
             db.add_all([
-                Journey(id=1, name="Philosophy"),
-                Journey(id=2, name="Science"),
-                Journey(id=3, name="Art")
+                Journey(categories_id=1, categories_name="Philosophy"),
+                Journey(categories_id=2, categories_name="Science"),
+                Journey(categories_id=3, categories_name="Art")
             ])
             db.commit()
     finally:
         db.close()
     yield  # App continues running
+
 
 
 # Pydantic models for validation
@@ -64,24 +83,38 @@ class UpdateJourneyRequest(BaseModel):
 @router.post("/api/update-journey")
 async def update_journey(request: UpdateJourneyRequest, db: SessionLocal = Depends(get_db)):
     # Check if the user exists
-    user = db.query(User).filter(User.id == request.user_id).first()
+    user = db.query(UserInf).filter(UserInf.user_id == request.user_id).first()
     if not user:
         raise HTTPException(status_code=404, detail=f"User with id {request.user_id} not found")
 
     # Check if the journey exists
-    journey = db.query(Journey).filter(Journey.id == request.journey).first()
+    journey = db.query(Journey).filter(Journey.categories_id == request.journey).first()
     if not journey:
         raise HTTPException(status_code=404, detail=f"Journey with id {request.journey} not found")
 
-    # Update user's journey
-    user.journey_id = journey.id
+    # Check if the user has already selected this journey
+    existing_selection = db.query(UserSelectedCategories).filter(
+        UserSelectedCategories.u_id == request.user_id,
+        UserSelectedCategories.c_id == request.journey
+    ).first()
+
+    if existing_selection:
+        return {
+            "message": "Journey already selected",
+            "user_id": request.user_id,
+            "journey_id": request.journey
+        }
+
+    # Add new selection
+    new_user_select_journey = UserSelectedCategories(u_id=request.user_id, c_id=request.journey)
+    db.add(new_user_select_journey)
     db.commit()
+    db.refresh(new_user_select_journey)
 
     # Return success response
     return {
         "message": "Journey updated successfully",
-        "user_id": user.id,
-        "new_journey": journey.name,
-        "new_journey_id": journey.id
+        "user_id": request.user_id,
+        "new_journey_id": request.journey
     }
 
