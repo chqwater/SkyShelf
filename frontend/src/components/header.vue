@@ -45,6 +45,7 @@ const handleCommand = (command: string) => {
     if (command == 'loginout') {
         router.push('/login');
         localStorage.removeItem('vuems_name');
+        localStorage.removeItem('vuems_email');
         localStorage.removeItem('vuems_token');
         localStorage.removeItem('vuems_admin');
     } else if (command == 'user') {

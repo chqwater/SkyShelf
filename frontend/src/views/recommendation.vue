@@ -1,6 +1,6 @@
 <template>
   <div class="content-box-reco">
-    <div class="search-bar">
+    <!-- <div class="search-bar">
       <ElInput
         style="width: 100%;"
         size="large"
@@ -8,7 +8,7 @@
         :suffix-icon="Search"
         v-model="searchTxt"
       ></ElInput>
-    </div>
+    </div> -->
     <div class="recomm-card" v-for="category in 10" :key="category">
       <p style="color: white; font-size: 20px; font-weight: 500;">Category {{ category }}</p>
       <div class="card-bounder">
@@ -61,8 +61,8 @@ const handleOpenBookOverview = (data1:any, data2:any)=>{
 .recomm-card{
   width: 900px;
   height: 660px;
-  margin-top: 80px;
-  margin-left: calc((100% - 940px)/2);
+  margin-top: 50px;
+  margin-left: calc((100% - 900px)/2);
   background: linear-gradient(45deg, #409EFF, rgb(94, 69, 159));
   display: flex;
   flex-direction: column;
@@ -74,10 +74,10 @@ const handleOpenBookOverview = (data1:any, data2:any)=>{
   scroll-snap-stop: always;
 }
 .recomm-card:not(:first-child) {
-  margin-left: calc((100% - 940px) / 2 - 150px);
+  margin-left: calc((100% - 900px) / 2);
 }
 .recomm-card:last-child {
-  margin-right: calc((100% - 940px) / 2);
+  margin-right: calc((100% - 900px) / 2);
 }
 .recomm-card:hover{
   box-shadow: 0 0 90px rgba(64, 158, 255, 1.5), inset 0 0 15px rgba(94, 69, 159, 0.4); 

@@ -53,6 +53,7 @@ import { useRouter } from 'vue-router';
 import { ElButton, ElForm, ElFormItem, ElIcon, ElInput, ElMessage, type FormInstance, type FormRules } from 'element-plus';
 import { Register } from '../../types/user';
 import { userRegistration } from '../../api/index';
+import { ElLoading } from 'element-plus';
 
 const router = useRouter();
 const param = reactive<Register>({
@@ -75,20 +76,27 @@ const rules: FormRules = {
 const register = ref<FormInstance>();
 const submitForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return;
+    const loading = ElLoading.service({
+    lock: true,
+    text: 'Loading',
+    background: 'rgba(0, 0, 0, 0.7)',
+  })
     formEl.validate(async (valid: boolean) => {
         if (valid) {
             const res = await userRegistration({
                 email: param.email,
                 password: param.password,
                 username: param.username
-            }).then((res) => {
+            }).then((res:any) => {
                 localStorage.setItem('vuems_id', res.user_id);
                 localStorage.setItem('vuems_token', "JWT_TOKEN");
-                localStorage.setItem('vuems_name', param.username);
+                localStorage.setItem('vuems_name', res.username);
                 localStorage.setItem('vuems_email', param.email);
+                loading.close();
                 router.push('/journey');
             })
         } else {
+            loading.close();
             return;
         }
     });

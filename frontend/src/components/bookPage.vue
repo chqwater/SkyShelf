@@ -3,24 +3,25 @@
     <div class="app-header">
       <div class="home-btn">
         <ElBreadcrumb separator="/">
-          <ElBreadcrumbItem :to="{path: '/home/booklist'}" style="font-size: 20px;"><p @click="handleBackToShelf">< My Shelf</p></ElBreadcrumbItem>
+          <ElBreadcrumbItem :to="{path: '/home/booklist'}" style="font-size: 20px;"><p @click="handleSaveProgress">< My Shelf</p></ElBreadcrumbItem>
           <ElBreadcrumbItem v-if="isLoading"><p class="book-name">Loading...</p></ElBreadcrumbItem>
           <ElBreadcrumbItem v-else><p class="book-name">{{ route.query.name }}</p></ElBreadcrumbItem>
         </ElBreadcrumb>
       </div>
       <div class="tool-bar">
-        <div class="tool-btn">
+        <div class="page-number-jump" v-if="showJump">
+          <ElInputNumber v-model="jumpPage" :min="1" :max="pageCount" style="margin-right: 5px;"/>
+          <ElButton type="primary" @click="JumpToThePage">Jump</ElButton>
+        </div>
+        <div class="tool-btn" @click="handleJumpButton">
           <ElIcon :size="30"><Guide/></ElIcon>
         </div>
-        <div class="tool-btn">
+        <div class="tool-btn" @click="handleSaveProgress">
           <ElIcon :size="30"><Checked/></ElIcon>
         </div>
-        <div class="tool-btn">
+        <a class="tool-btn" :href="route.query.bookurl" download="book.pdf" target="_blank">
           <ElIcon :size="30"><Download/></ElIcon>
-        </div>
-        <div class="tool-btn">
-          <ElIcon :size="30"><Guide/></ElIcon>
-        </div>
+        </a>
       </div>
       <p class="page-info">{{ pageCount }} Pages in total</p>
     </div>
@@ -51,7 +52,7 @@
 </template>
 
 <script setup>
-import { ElBreadcrumb, ElBreadcrumbItem, ElButton, ElDropdownMenu, ElIcon, ElMessage, ElProgress } from "element-plus";
+import { ElBreadcrumb, ElBreadcrumbItem, ElButton, ElDropdownMenu, ElIcon, ElInputNumber, ElMessage, ElProgress } from "element-plus";
 import { ref, onMounted, watch, computed } from "vue";
 import VuePdfEmbed from "vue-pdf-embed";
 import { useRoute } from 'vue-router';
@@ -67,21 +68,31 @@ const pageCount = ref(1);
 const showAllPages = ref(false);
 const pdfRef = ref(null);
 const secondpdfRef = ref(null);
+const showJump = ref(false);
+const jumpPage = ref(1);
+
+const handleJumpButton = ()=>{
+  showJump.value = !showJump.value;
+  jumpPage.value = page.value
+}
+const JumpToThePage = ()=>{
+  if (jumpPage.value%2 === 0){
+    page.value = jumpPage.value - 1;
+  } else {
+    page.value = jumpPage.value;
+  }
+  secondPage.value = page.value + 1;
+}
+const closeJumpButton = ()=>{
+  showJump.value = false;
+}
 
 const format = (percentage) => (percentage === 100 ? 'Finish' : `${percentage}%`)
 const pagePercentage = computed(()=>{
   const percentage = (page.value / pageCount.value) * 100;
   return Math.round(percentage);
 })
-const handleBackToShelf = ()=>{
-  notify({
-    title: 'Reading Progress Saved for ' + route.query.name,
-    duration: 3000,
-    message: 'Dont worry! You will continue from the page you left.',
-    type: 'success',
-    offset: 60
-  })
-}
+
 const handleNextPage = () => {
   if ( page.value + 1 >= pageCount.value){
     ElMessage.warning('This is the last page!');
@@ -103,6 +114,16 @@ function handleDocumentRender(args) {
   console.log("pdf loaded");
   isLoading.value = false;
   pageCount.value = pdfRef.value.pageCount;
+}
+
+const handleSaveProgress = ()=>{
+  notify({
+    title: 'Reading Progress Saved for ' + route.query.name,
+    duration: 3000,
+    message: 'Dont worry! You will continue from the page you left.',
+    type: 'success',
+    offset: 60
+  })
 }
 watch(showAllPages, () => {
   page.value = showAllPages.value ? null : 1;
@@ -201,8 +222,8 @@ onMounted(() => {
   flex-direction: row;
   width: 100%;
   justify-content: end;
-  align-items: end;
-  height: 60px;
+  align-items: center;
+  min-height: 52px;
 }
 .tool-btn{
   color: rgb(90, 90, 90);
@@ -212,10 +233,14 @@ onMounted(() => {
   width: 30px;
   height: 30px;
   cursor: pointer;
-  margin-top: 20px;
 }
 .tool-btn:hover{
   color: #409EFF;
   border: 1px solid #409EFF;
+}
+.page-number-jump{
+  background-color: white;
+  padding: 10px;
+  border-radius: 15px;
 }
 </style>

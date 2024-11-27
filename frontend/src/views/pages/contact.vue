@@ -53,7 +53,7 @@ const handleBack = ()=>{
 }
 </script>
 
-<style>
+<style scoped>
 .content-box-contact{
     display: flex;
     flex-direction: column;

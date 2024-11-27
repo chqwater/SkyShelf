@@ -82,7 +82,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
         if (valid) {
             ElMessage.success('login successful');
             localStorage.setItem('vuems_token', "JWT_TOKEN");
-            localStorage.setItem('vuems_name', param.email);
+            localStorage.setItem('vuems_email', param.email);
             localStorage.setItem('vuems_admin', "admin");
             router.push('/');
             if (checked.value) {

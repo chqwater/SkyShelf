@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { ElBreadcrumb, ElBreadcrumbItem, ElButton, ElDivider } from 'element-plus';
+import { ElButton, ElDivider } from 'element-plus';
 
 </script>
 
@@ -43,7 +43,7 @@ import { ElBreadcrumb, ElBreadcrumbItem, ElButton, ElDivider } from 'element-plu
 	height: 600px;
 	width: 600px;
 	padding: 10px;
-  box-shadow: 0 0 10px 5px white;
+  	box-shadow: 0 0 10px 5px white;
 }
 .info{
 	height: 30%;
