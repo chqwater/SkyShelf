@@ -8,3 +8,11 @@ export function userRegistration(data: any) {
         data
     })
 }
+
+export function updateJourney(data :any) {
+    return request({
+        url: 'api/update-journey',
+        method: 'post',
+        data
+    })
+}

@@ -5,7 +5,7 @@
         <p style="font-size: 40px; ">Welcome to SkyShelf!</p>
         <p >We would like to know your prefrence😊</p>
       </div>
-      <ElCheckboxGroup v-model="checkedJourney" :max="1" class="options">
+      <ElCheckboxGroup v-model="checkedJourney" :max="3" class="options">
         <ElCheckbox :label="item" size="large" border v-for="(item, index) in journey" :key="index" style="width: 100%; margin: 10px 0 10px 0;"/>
       </ElCheckboxGroup>
       <div class="start-btn" @click="handleStart" style="width: 200px;">Start</div>
@@ -17,7 +17,10 @@
 import { ElCheckbox, ElCheckboxGroup, ElNotification } from 'element-plus';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { updateJourney } from '../../api/index'
 
+const user_id: string | null = localStorage.getItem('vuems_id');
+const newJourney = ref([] as number[]);
 const router = useRouter();
 const journey = [
   "Literary Fiction",
@@ -33,12 +36,25 @@ const journey = [
 ];
 const checkedJourney = ref([])
 const handleStart = ()=>{
+  handleUpdate();
   router.push('/home/recommendation');
   ElNotification({
     type: 'success',
     title: 'You have updated your Journey!',
     duration: 3000,
     offset: 60
+  })
+}
+const updateNewJourney = () => {
+  newJourney.value = checkedJourney.value.map(item => journey.indexOf(item)+1);
+};
+const handleUpdate = async ()=>{
+  updateNewJourney();
+  await updateJourney({
+    user_id: user_id,
+    new_journey: newJourney.value
+  }).then((res:any)=>{
+    console.log(res.new_journey_ids);
   })
 }
 </script>
