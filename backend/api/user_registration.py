@@ -15,13 +15,12 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
 # Database Model
-class UserAuth(Base):
-    __tablename__ = "userauth"
-    id = Column(Integer, primary_key=True, index=True)
-    email = Column(String(255), unique=True, nullable=False)
-    password = Column(String(255), nullable=False)
-    username = Column(String(255), nullable=False)
-    created_at = Column(DateTime, server_default=func.now())
+class UserInf(Base):
+    __tablename__ = "User_inf"
+    user_id = Column(Integer, primary_key=True, index=True)
+    user_email = Column(String(255), unique=True, nullable=False)
+    user_password = Column(String(255), nullable=False)
+    user_name = Column(String(255), nullable=False)
 
 # Create tables
 Base.metadata.create_all(bind=engine)
@@ -48,7 +47,7 @@ def hash_password(password: str) -> str:
 @router.post("/api/register")
 async def register_user(user: UserRegister, db: Session = Depends(get_db)):
     # Check if the email is already registered
-    existing_user = db.query(UserAuth).filter(UserAuth.email == user.email).first()
+    existing_user = db.query(UserInf).filter(UserInf.user_email == user.email).first()
     if existing_user:
         raise HTTPException(status_code=400, detail="Email is already registered")
 
@@ -56,9 +55,9 @@ async def register_user(user: UserRegister, db: Session = Depends(get_db)):
     hashed_password = hash_password(user.password)
 
     # Create a new user
-    new_user = UserAuth(email=user.email, password=hashed_password, username=user.username)
+    new_user = UserInf(user_email=user.email, user_password=hashed_password, user_name=user.username)
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
 
-    return {"message": "User registered successfully", "user_id": new_user.id}
+    return {"message": "User registered successfully", "user_id": new_user.user_id, "username": new_user.user_name, "email": new_user.user_email}
