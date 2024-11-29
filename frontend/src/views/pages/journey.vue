@@ -17,7 +17,8 @@
 import { ElCheckbox, ElCheckboxGroup, ElNotification } from 'element-plus';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { updateJourney } from '../../api/index'
+import { updateJourney } from '../../api/index';
+import { ElLoading } from 'element-plus';
 
 const user_id: string | null = localStorage.getItem('vuems_id');
 const newJourney = ref([] as number[]);
@@ -36,7 +37,13 @@ const journey = [
 ];
 const checkedJourney = ref([])
 const handleStart = ()=>{
+  const loading = ElLoading.service({
+    lock: true,
+    text: 'Loading',
+    background: 'rgba(0, 0, 0, 0.7)',
+  })
   handleUpdate();
+  loading.close();
   router.push('/home/recommendation');
   ElNotification({
     type: 'success',

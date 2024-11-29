@@ -40,8 +40,8 @@
         @rendered="handleDocumentRender"
         height="800"
       />
-      <ElIcon style="position: absolute; top: 50%; left:-8%; color: white; cursor: pointer;" size="80" @click="handlePreviousPage" class="btn" ><CaretLeft/></ElIcon>
-      <ElIcon style="position: absolute; top: 50%; right:-8%; color: white; cursor: pointer;" size="80" @click="handleNextPage" class="btn" ><CaretRight/></ElIcon>
+      <ElIcon style="position: absolute; top: 50%; left:-10%; color: white; cursor: pointer;" size="80" @click="handlePreviousPage" class="btn" ><CaretLeft/></ElIcon>
+      <ElIcon style="position: absolute; top: 50%; right:-10%; color: white; cursor: pointer;" size="80" @click="handleNextPage" class="btn" ><CaretRight/></ElIcon>
       <div style="position: absolute; top: -30px; left:0%; color: white; background-color: gray; border-radius: 10px; padding: 5px;">page {{ page }} </div>
       <div style="position: absolute; top: -30px; right:0%; color: white; background-color: gray; border-radius: 10px; padding: 5px">page {{ secondPage }}</div>
     </div>
@@ -58,6 +58,7 @@ import VuePdfEmbed from "vue-pdf-embed";
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
 import { ElNotification as notify } from 'element-plus'
+import { ElLoading } from 'element-plus';
 
 const router = useRouter();
 const route = useRoute();
@@ -83,9 +84,11 @@ const JumpToThePage = ()=>{
   }
   secondPage.value = page.value + 1;
 }
-const closeJumpButton = ()=>{
-  showJump.value = false;
-}
+const loading = ElLoading.service({
+    lock: true,
+    text: 'Loading',
+    background: 'rgba(255, 255, 255, 0.7)',
+  })
 
 const format = (percentage) => (percentage === 100 ? 'Finish' : `${percentage}%`)
 const pagePercentage = computed(()=>{
@@ -114,6 +117,7 @@ function handleDocumentRender(args) {
   console.log("pdf loaded");
   isLoading.value = false;
   pageCount.value = pdfRef.value.pageCount;
+  loading.close();
 }
 
 const handleSaveProgress = ()=>{

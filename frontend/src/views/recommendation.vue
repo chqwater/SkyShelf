@@ -9,12 +9,12 @@
         v-model="searchTxt"
       ></ElInput>
     </div> -->
-    <div class="recomm-card" v-for="category in 10" :key="category">
-      <p style="color: white; font-size: 20px; font-weight: 500;">Category {{ category }}</p>
+    <div class="recomm-card" v-for="category in param.recommendations" :key="category">
+      <p style="color: white; font-size: 20px; font-weight: 500;">{{ category.name }}</p>
       <div class="card-bounder">
       <ElCarousel :interval="5000" type="card" height="600px">
-        <ElCarouselItem v-for="item in 3" :key="item" style="width: 400px;" @click="handleOpenBookOverview(category,item)">
-          <h3 text="2xl" justify="center">book {{ item }}</h3>
+        <ElCarouselItem v-for="item in category.books" :key="item" style="width: 400px;" @click="handleOpenBookOverview(category,item)">
+          <img :src="item.img_url" style="width: 100%; height: 100%">
         </ElCarouselItem>
       </ElCarousel>
       </div>
@@ -25,16 +25,42 @@
 <script setup lang="ts" name="recommendation">
 import { Search } from "@element-plus/icons-vue";
 import { ElCarousel, ElCarouselItem, ElInput } from "element-plus";
-import { ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
+import { getRecommendation } from '../api/index'
 
 const router = useRouter();
 const searchTxt = ref("");
+const user_id: string | null = localStorage.getItem('vuems_id');
+const param = reactive({
+  recommendations: []
+})
 
 const handleOpenBookOverview = (data1:any, data2:any)=>{
   console.log(data1,data2);
-  router.push('/home/overview');
+  router.push({
+    path: '/home/overview',
+    query: {
+      category: data1.name,
+      book_id: data2.id,
+      title: data2.title,
+      author: data2.author,
+      description: data2.description,
+      file_url: data2.file_url,
+      img_url: data2.img_url
+    }
+  });
 }
+
+const loadRecommendation = async ()=>{
+  await getRecommendation(user_id).then((res:any)=>{
+    param.recommendations = res.recommendations;
+  })
+}
+
+onMounted(()=>{
+  loadRecommendation();
+})
 </script>
 
 <style scoped>

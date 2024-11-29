@@ -97,6 +97,14 @@ const routes: RouteRecordRaw[] = [
         component: () => import(/* webpackChunkName: "login" */ '../views/pages/login.vue'),
     },
     {
+        path: '/reset',
+        meta: {
+            title: 'Reset',
+            noAuth: true,
+        },
+        component: () => import(/* webpackChunkName: "login" */ '../views/pages/resetPasswd.vue'),
+    },
+    {
         path: '/register',
         meta: {
             title: 'Register',
@@ -156,7 +164,7 @@ router.beforeEach((to, from, next) => {
     NProgress.start();
     const admin = localStorage.getItem('vuems_admin');
     const token = localStorage.getItem('vuems_token');
-    if (!token && to.path !== '/login' && to.path !== '/register') {
+    if (!token && to.path !== '/login' && to.path !== '/register' && to.path !== '/reset') {
         next('/login');
     } else if(!admin && !to.meta.noAuth){
         next('/403');

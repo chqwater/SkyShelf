@@ -34,9 +34,8 @@
                     <el-link type="primary" @click="$router.push('/reset-pwd')">Forgot </el-link>
                 </div> -->
                 <ElButton class="login-btn" size="large" @click="submitForm(login)">Login</ElButton>
-                <p class="login-tips">Tips : rules to be declared</p>
                 <p class="login-text">
-                    No account?--<span class="navi-btn" @click="$router.push('/register')" style="color: white; text-decoration: underline;">Sign Up</span>
+                    No account?&nbsp;&nbsp;<span class="navi-btn" @click="$router.push('/register')" style="color: white; text-decoration: underline;">Sign Up</span>
                 </p>
             </ElForm>
         </div>
@@ -84,6 +83,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
             localStorage.setItem('vuems_token', "JWT_TOKEN");
             localStorage.setItem('vuems_email', param.email);
             localStorage.setItem('vuems_admin', "admin");
+            localStorage.setItem('vuems_id', 1);
             router.push('/');
             if (checked.value) {
                 localStorage.setItem('login-param', JSON.stringify(param));
@@ -179,14 +179,21 @@ const submitForm = (formEl: FormInstance | undefined) => {
 .login-tips {
     font-size: 12px;
     color: white;
+    width: 100%;
+    text-align: end;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 .login-text {
-    display: flex;
-    align-items: center;
     margin-top: 20px;
     font-size: 14px;
     color: white;
+    width: 100%;
+    text-align: center;
+}
+.login-tips:hover{
+    color: aqua  !important;
 }
 :deep().el-input__wrapper {
   background-color: transparent;
