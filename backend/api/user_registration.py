@@ -21,6 +21,7 @@ class UserInf(Base):
     user_email = Column(String(255), unique=True, nullable=False)
     user_password = Column(String(255), nullable=False)
     user_name = Column(String(255), nullable=False)
+    role = Column(String(255), nullable=False)
 
 # Create tables
 Base.metadata.create_all(bind=engine)
@@ -55,9 +56,9 @@ async def register_user(user: UserRegister, db: Session = Depends(get_db)):
     hashed_password = hash_password(user.password)
 
     # Create a new user
-    new_user = UserInf(user_email=user.email, user_password=hashed_password, user_name=user.username)
+    new_user = UserInf(user_email=user.email, user_password=hashed_password, user_name=user.username, role="user")
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
 
-    return {"message": "User registered successfully", "user_id": new_user.user_id, "username": new_user.user_name, "email": new_user.user_email}
+    return {"message": "User registered successfully", "user_id": new_user.user_id, "username": new_user.user_name, "email": new_user.user_email, "role": "user"}

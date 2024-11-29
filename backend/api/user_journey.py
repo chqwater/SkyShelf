@@ -21,7 +21,7 @@ class UserInf(Base):
     user_email = Column(String(255), unique=True, nullable=False)
     user_password = Column(String(255), nullable=False)
     user_name = Column(String(255), nullable=False)
-
+    role = Column(String(255), nullable=False)
     # Define reverse relationship for better queries
     selected_categories = relationship("UserSelectedCategories", back_populates="user")
 
