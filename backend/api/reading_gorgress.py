@@ -1,8 +1,10 @@
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, HTTPException, Depends, APIRouter
 from pydantic import BaseModel, Field
 from sqlalchemy import Column, Integer, create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
+
+router = APIRouter()
 # Initialize FastAPI app
 app = FastAPI()
 
