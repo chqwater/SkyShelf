@@ -27,7 +27,8 @@ import { Search } from "@element-plus/icons-vue";
 import { ElCarousel, ElCarouselItem, ElInput } from "element-plus";
 import { onMounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
-import { getRecommendation } from '../api/index'
+import { getRecommendation } from '../api/index';
+import { ElLoading } from 'element-plus';
 
 const router = useRouter();
 const searchTxt = ref("");
@@ -35,6 +36,12 @@ const user_id: string | null = localStorage.getItem('vuems_id');
 const param = reactive({
   recommendations: []
 })
+
+const loading = ElLoading.service({
+    lock: true,
+    text: 'Loading',
+    background: 'rgba(0, 0, 0, 0.7)',
+  })
 
 const handleOpenBookOverview = (data1:any, data2:any)=>{
   console.log(data1,data2);
@@ -56,6 +63,7 @@ const loadRecommendation = async ()=>{
   await getRecommendation(user_id).then((res:any)=>{
     param.recommendations = res.recommendations;
   })
+  loading.close();
 }
 
 onMounted(()=>{

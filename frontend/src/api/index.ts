@@ -55,3 +55,10 @@ export function getRecommendation(id:any) {
         method: 'get'
     });
 }
+
+export function getShelf(id:any){
+    return request({
+        url: `/api/shelf/${id}`,
+        method: 'get'
+    })
+}

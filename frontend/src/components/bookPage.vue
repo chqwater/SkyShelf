@@ -59,6 +59,8 @@ import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
 import { ElNotification as notify } from 'element-plus'
 import { ElLoading } from 'element-plus';
+import { saveProgress } from "../api";
+
 
 const router = useRouter();
 const route = useRoute();
@@ -71,6 +73,7 @@ const pdfRef = ref(null);
 const secondpdfRef = ref(null);
 const showJump = ref(false);
 const jumpPage = ref(1);
+const user_id = localStorage.getItem('vuems_id');
 
 const handleJumpButton = ()=>{
   showJump.value = !showJump.value;
@@ -112,7 +115,28 @@ const handlePreviousPage = () => {
   page.value = page.value - 2;
   secondPage.value = secondPage.value - 2;
 };
-
+const saveReadProgress = async ()=>{
+  const loading2 = ElLoading.service({
+    lock: true,
+    text: 'Loading',
+    background: 'rgba(0, 0, 0, 0.7)',
+  })
+  await saveProgress({
+    user_id: Number(user_id),
+    book_id: Number(route.query.bookid),
+    last_read_position: Number(page.value)
+  }).then(res =>{
+    console.log('saved at page' + page.value);
+    loading2.close();
+    notify({
+    title: 'Reading Progress Saved for ' + route.query.name,
+    duration: 3000,
+    message: 'Dont worry! You will continue from the page you left.',
+    type: 'success',
+    offset: 60
+    });
+  })
+}
 function handleDocumentRender(args) {
   console.log("pdf loaded");
   isLoading.value = false;
@@ -121,13 +145,7 @@ function handleDocumentRender(args) {
 }
 
 const handleSaveProgress = ()=>{
-  notify({
-    title: 'Reading Progress Saved for ' + route.query.name,
-    duration: 3000,
-    message: 'Dont worry! You will continue from the page you left.',
-    type: 'success',
-    offset: 60
-  })
+  saveReadProgress();
 }
 watch(showAllPages, () => {
   page.value = showAllPages.value ? null : 1;

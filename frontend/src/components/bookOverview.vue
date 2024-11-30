@@ -17,28 +17,48 @@
 			</div>
 			<ElDivider></ElDivider>
 			<div class="bottom">
-				<ElButton type="primary">Start reading</ElButton>
+				<ElButton type="primary" @click="addToShelf">Add book to my shelf</ElButton>
 			</div>
 		</div>
 	</div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ElButton, ElDivider } from 'element-plus';
 import { onMounted, reactive } from 'vue';
 import { useRoute } from 'vue-router';
+import { useRouter } from "vue-router";
+import { ElNotification as notify } from 'element-plus';
+import { addBook } from '../api';
+import { ElLoading } from 'element-plus';
 
 const route = useRoute();
+const router = useRouter();
+const user_id: string | null = localStorage.getItem('vuems_id');
 const param = reactive({
-	category: null,
-	book_id: null,
-	title: '',
-	author: '',
-	description: '',
-	file_url: '',
-	img_url: ''
+	category: null as any,
+	book_id: null as any,
+	title: '' as any,
+	author: '' as any,
+	description: '' as any,
+	file_url: '' as any,
+	img_url: '' as any
 })
 
+const addToShelf = async ()=>{
+	const loading = ElLoading.service({
+    lock: true,
+    text: 'Loading',
+    background: 'rgba(0, 0, 0, 0.7)',
+  	})
+	await addBook({
+		user_id: user_id,
+		book_id: param.book_id
+	})
+	console.log('add');
+	loading.close();
+	router.push('/home/booklist')
+}
 onMounted(()=>{
 	param.category = route.query.category;
 	param.book_id = route.query.book_id;

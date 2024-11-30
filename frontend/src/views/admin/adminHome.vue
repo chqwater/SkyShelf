@@ -27,22 +27,11 @@ const sidebar = useSidebarStore();
     right: 0;
     top: 70px;
     bottom: 0;
-    padding-bottom: 30px;
     -webkit-transition: left 0.3s ease-in-out;
     transition: left 0.3s ease-in-out;
     background: #eef0fc;
     overflow: hidden;
-}
-.bottom-bar{
-    width: 100%;
-    min-height: 50px;
-    background-color:aqua;
-    position: fixed;
-    bottom: 0%;
-    left: 0%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
 }
 
 .content::-webkit-scrollbar {

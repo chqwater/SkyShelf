@@ -51,7 +51,7 @@ const handleCommand = (command: string) => {
     } else if (command == 'user') {
         router.push('/home/ucenter');
     } else if (command == 'admin'){
-        router.push('/admin');
+        router.push('/admin/book');
     }
 };
 
