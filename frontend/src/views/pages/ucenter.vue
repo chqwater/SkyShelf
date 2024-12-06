@@ -10,23 +10,49 @@
             <div class="personal-info">
                 <p>{{username}}</p>
                 <p>{{ email }}</p>
-                <p>My journay: </p>
+                <div class="journey">
+                    <p>My Journey: &nbsp;</p>
+                    <p>Fiction&nbsp;</p>
+                    <div class="edit-btn">
+                        <ElButton type="primary" link :icon="Edit" @click="router.push('/journey')">Edit</ElButton>
+                    </div>
+                </div>
             </div>
             <div class="reading">
                 <p>I'm Reading</p>
+                <div class="book-list">
+                    <div class="book" v-for="item in prop.bookList">
+                        <img :src="item.img_url" style="width: 100%; height: 100%" >
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts" name="ucenter">
-import { UserFilled } from '@element-plus/icons-vue'
-import { ElAvatar, ElIcon } from 'element-plus';
+import { Edit, UserFilled } from '@element-plus/icons-vue'
+import { ElAvatar, ElButton, ElIcon } from 'element-plus';
 import { useRouter } from 'vue-router';
+import { getShelf } from '../../api';
+import { onMounted, reactive } from 'vue';
 
 const username: string | null = localStorage.getItem('vuems_name');
 const email: string | null = localStorage.getItem('vuems_email');
+const user_id: string | null = localStorage.getItem('vuems_id');
+const router = useRouter();
+const prop = reactive({
+  bookList: []
+});
 
+const loadShelf = async ()=>{
+  await getShelf(user_id).then((res:any)=>{
+    prop.bookList = res;
+  })
+}
+onMounted(()=>{
+    loadShelf();
+})
 </script>
 
 <style scoped>
@@ -96,5 +122,33 @@ const email: string | null = localStorage.getItem('vuems_email');
     display: flex;
     color: rgb(180, 180, 180);
     flex-direction: column;
+}
+.book-list{
+    height: 160px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-left: 20px;
+    overflow: hidden;
+    flex-wrap: nowrap;
+}
+.book{
+    height: 140px;
+    width: 90px;
+    border-radius: 10px;
+    border: 1px solid rgb(180, 180, 180);
+    margin-right: 10px;
+    overflow: hidden;
+}
+.journey{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.edit-btn{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: end;
 }
 </style>

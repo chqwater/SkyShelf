@@ -1,9 +1,9 @@
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, HTTPException, Depends, APIRouter
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
 # Initialize FastAPI app
-app = FastAPI()
+router = APIRouter()
 
 # Database configuration
 DATABASE_URL = "mysql+pymysql://team_skyshelf:SkyShelf2024@db4free.net:3306/skyshelf_sdm"
@@ -13,8 +13,8 @@ Base = declarative_base()
 
 # Define database model
 class User(Base):
-    __tablename__ = "user"
-    id = Column(Integer, primary_key=True, index=True)
+    __tablename__ = "User_inf"
+    user_id = Column(Integer, primary_key=True, index=True)
     user_email = Column(String(255), nullable=False, unique=True)
     user_name = Column(String(255), nullable=False)
     user_password = Column(String(255), nullable=False)
@@ -28,7 +28,7 @@ def get_db():
     finally:
         db.close()
 
-@app.get("/api/admin/users")
+@router.get("/api/admin/users")
 async def get_all_users(db: SessionLocal = Depends(get_db)):
     """
     Retrieve all users with specific fields.
@@ -38,7 +38,7 @@ async def get_all_users(db: SessionLocal = Depends(get_db)):
         user_list = []
         for user in users:
             user_list.append({
-                "user_id": user.id,
+                "user_id": user.user_id,
                 "user_name": user.user_name,
                 "email": user.user_email,
                 "password": user.user_password,  # Encrypted password as stored in DB

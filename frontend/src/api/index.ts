@@ -62,3 +62,10 @@ export function getShelf(id:any){
         method: 'get'
     })
 }
+
+export function getAllUserInfo(){
+    return request({
+        url: 'api/admin/users',
+        method: 'get'
+    })
+}

@@ -1,7 +1,7 @@
 # app/main.py
-from fastapi import FastAPI, HTTPException, Depends, APIRouter
+from fastapi import HTTPException, Depends, APIRouter
 from pydantic import BaseModel, EmailStr
-from sqlalchemy import Column, Integer, String, create_engine, DateTime, func
+from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 import bcrypt

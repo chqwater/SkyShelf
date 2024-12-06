@@ -17,22 +17,12 @@ service.interceptors.request.use((config: any) => {
     const status = response.status;
     console.log(status)
     if (status !== 200) {
-      ElMessage({
-          message: res.message || 'Error occurred',
-          type: 'error',
-          duration: 50000
-      });
-      return Promise.reject(new Error(res.message || 'Error occurred'));
+      return Promise.reject(new Error(res.detail || 'Error occurred'));
     } else {
       return res; 
     }
   }, error => {
     console.error('Request error', error);
-    ElMessage({
-        message: error.message || 'Network error',
-        type: 'error',
-        duration: 5000
-    });
     return Promise.reject(error);
   })
 

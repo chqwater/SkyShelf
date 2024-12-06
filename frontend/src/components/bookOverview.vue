@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { ElButton, ElDivider } from 'element-plus';
+import { ElButton, ElDivider, ElMessage } from 'element-plus';
 import { onMounted, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import { useRouter } from "vue-router";
@@ -54,6 +54,9 @@ const addToShelf = async ()=>{
 	await addBook({
 		user_id: user_id,
 		book_id: param.book_id
+	}).catch(err =>{
+		ElMessage.warning('The book is already added in your shelf!')
+		loading.close();
 	})
 	console.log('add');
 	loading.close();

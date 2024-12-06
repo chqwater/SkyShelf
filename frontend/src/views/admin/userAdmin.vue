@@ -8,17 +8,14 @@
             </ElInput>
             <ElButton type="primary" :icon="Plus" round style="width: 150px; margin-left: 100px; margin-right: 20px;">Add New User</ElButton>
         </div>
-      <ElTable style="width: 100%; height: 100%;" :data="tableData" max-height="1000">
+      <ElTable style="width: 100%; height: 100%;" :data="param.userData" max-height="1000">
         <el-table-column  width="60" />
-        <ElTableColumn prop="id" label="id" width="130"/>
-        <ElTableColumn prop="name" label="Name" width="170"/>
+        <ElTableColumn prop="user_id" label="id" width="130"/>
+        <ElTableColumn prop="user_name" label="Name" width="170"/>
         <ElTableColumn prop="email" label="Email" width="350"/>
         <ElTableColumn prop="role" label="Role" width="450"/>
         <el-table-column fixed="right" label="Operations" min-width="200">
             <template #default>
-                <el-button link type="primary" size="small">
-                    Detail
-                </el-button>
                 <el-button link type="primary" size="small">Edit</el-button>
                 <el-button link type="primary" size="small">Delete</el-button>
             </template>
@@ -32,41 +29,23 @@ import { ElTable, ElTableColumn, ElButton, ElInput, ElIcon } from 'element-plus'
 import {
   Plus
 } from '@element-plus/icons-vue'
-import { ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
+import { getAllUserInfo } from '../../api';
 
 const searchText = ref();
-const tableData = [
-    {
-        id: 1,
-        name: 'Tom',
-        email: 'example@gmail.com',
-        role: 'admin'
-    },
-    {
-        id: 1,
-        name: 'Tom',
-        email: 'example@gmail.com',
-        role: 'user'
-    },
-    {
-        id: 1,
-        name: 'Tom',
-        email: 'example@gmail.com',
-        role: 'user'
-    },
-    {
-        id: 1,
-        name: 'Tom',
-        email: 'example@gmail.com',
-        role: 'user'
-    },
-    {
-        id: 1,
-        name: 'Tom',
-        email: 'example@gmail.com',
-        role: 'user'
-    },
-]
+const param = reactive({
+    userData: []
+})
+
+const getUsers = async ()=>{
+    await getAllUserInfo().then(res =>{
+        param.userData = res.users;
+    });
+};
+
+onMounted(()=>{
+    getUsers();
+})
 </script>
 
 <style scoped>

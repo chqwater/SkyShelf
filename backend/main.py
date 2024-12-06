@@ -5,6 +5,8 @@ from api.user_journey import router as journey_router
 from api.add_to_shelf import router as add_to_shelf_router
 from api.reading_gorgress import router as reading_grogres_router
 from api.user_shelf import router as user_shelf_router
+from api.edit_book import router as edit_book_router
+from api.admin_users import router as admin_users_router
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -29,6 +31,8 @@ app.include_router(journey_router, tags=["journey"])
 app.include_router(add_to_shelf_router, tags=["add_to_shelf"])
 app.include_router(reading_grogres_router, tags=["reading_gorgress"])
 app.include_router(user_shelf_router, tags=["user_shelf"])
+app.include_router(admin_users_router, tags=["admin_users"])
+app.include_router(edit_book_router, tags=["edit_book"])
 
 @app.get("/")
 async def root():
