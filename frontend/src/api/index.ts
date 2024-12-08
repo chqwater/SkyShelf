@@ -101,3 +101,18 @@ export function createBook(data:any){
         data
     })
 }
+
+export function editUserInfo(data:any){
+    return request({
+        url: 'api/admin/edit-user-info',
+        method: 'post',
+        data
+    })
+}
+
+export function getUserJourney(id:any){
+    return request({
+        url: `/api/get-user-journeys/${id}`,
+        method: 'get'
+    })
+}

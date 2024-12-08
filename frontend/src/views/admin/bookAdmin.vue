@@ -16,7 +16,7 @@
       <div class="tool-bar">
         <ElButton
           type="primary"
-          style="margin-right: 20px;"
+          style="margin-right: 20px"
           :icon="Plus"
           @click="openDrawer()"
         >
@@ -30,16 +30,8 @@
               <img :src="book.img_url" />
             </div>
             <div class="actions">
-              <button
-                class="action-btn edit-btn"
-                @click="openDrawer(book)"
-              >
-                Edit
-              </button>
-              <button
-                class="action-btn delete-btn"
-                @click="deleteBook(book.book_id)"
-              >
+              <button class="action-btn edit-btn" @click="openDrawer(book)">Edit</button>
+              <button class="action-btn delete-btn" @click="deleteBook(book.book_id)">
                 Delete
               </button>
             </div>
@@ -73,7 +65,12 @@
           <ElInput v-model="currentBook.img_url" placeholder="Enter image URL" />
         </ElFormItem>
         <ElFormItem label="Description" prop="description">
-          <ElInput v-model="currentBook.description" type="textarea" placeholder="Enter description" autosize/>
+          <ElInput
+            v-model="currentBook.description"
+            type="textarea"
+            placeholder="Enter description"
+            autosize
+          />
         </ElFormItem>
         <ElFormItem>
           <ElButton type="primary" @click="saveBook">Save</ElButton>
@@ -95,11 +92,16 @@ import {
   ElFormItem,
   ElInput,
   ElSelect,
-  ElOption
+  ElOption,
 } from "element-plus";
 import { Plus } from "@element-plus/icons-vue";
 import { onMounted, reactive, ref } from "vue";
-import { getBooks, editBook as apiSaveBook, deleteBook as apiDeleteBook, createBook as apiCreateBook } from "../../api";
+import {
+  getBooks,
+  editBook as apiSaveBook,
+  deleteBook as apiDeleteBook,
+  createBook as apiCreateBook,
+} from "../../api";
 
 // Predefined journey categories
 const journey = [
@@ -112,7 +114,7 @@ const journey = [
   "Biography & Memoirs",
   "Self-Help & Psychology",
   "Historical Fiction",
-  "Adventure & Travel"
+  "Adventure & Travel",
 ];
 
 // State and reactive variables
@@ -180,7 +182,7 @@ const saveBook = () => {
             author_name: currentBook.author_name,
             img_url: currentBook.img_url,
             description: currentBook.description,
-            category_id: currentBook.category_id
+            category_id: currentBook.category_id,
           });
         }
 
@@ -282,23 +284,24 @@ onMounted(() => {
   width: 100%;
   height: 100%;
 }
-.tool-bar{
-	width: 100%;
-	height: 70px;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: end;
-	position: fixed;
-	top: 70px;
-	right: 0%;
+.tool-bar {
+  width: 100%;
+  height: 70px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+  position: fixed;
+  top: 70px;
+  right: 0%;
 }
 .book-containner {
   width: 100%;
   display: flex;
   flex-direction: row;
-	margin-top: 60px;
+  margin-top: 60px;
   flex-wrap: wrap;
+  overflow-y: scroll;
 }
 .book {
   height: 250px;
