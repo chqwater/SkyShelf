@@ -47,7 +47,8 @@ import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { ElIcon, ElMessage, ElInput, ElButton, ElForm, ElFormItem } from 'element-plus';
 import type { FormInstance, FormRules } from 'element-plus';
-
+import { userLogin } from '../../api';
+import { ElLoading } from 'element-plus';
 
 interface LoginInfo {
     email: string;
@@ -77,19 +78,27 @@ const rules: FormRules = {
 const login = ref<FormInstance>();
 const submitForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return;
-    formEl.validate((valid: boolean) => {
+    const loading = ElLoading.service({
+    lock: true,
+    text: 'Loading',
+    background: 'rgba(0, 0, 0, 0.7)',
+    })
+    formEl.validate(async (valid: boolean) => {
         if (valid) {
-            ElMessage.success('login successful');
-            localStorage.setItem('vuems_token', "JWT_TOKEN");
-            localStorage.setItem('vuems_email', param.email);
-            localStorage.setItem('vuems_admin', "admin");
-            localStorage.setItem('vuems_id', 1);
-            router.push('/');
-            if (checked.value) {
-                localStorage.setItem('login-param', JSON.stringify(param));
-            } else {
-                localStorage.removeItem('login-param');
-            }
+            await userLogin({
+                email: param.email,
+                password: param.password
+            }).then((res:any) => {
+                localStorage.setItem('vuems_id', res.user_id);
+                localStorage.setItem('vuems_token', "JWT_TOKEN");
+                localStorage.setItem('vuems_name', res.username);
+                localStorage.setItem('vuems_email', param.email);
+                if(res.role === 'admin'){
+                    localStorage.setItem('vuems_admin', 'admin');
+                }
+                loading.close();
+                router.push('/');
+            })
         } else {
             ElMessage.error('login failed');
             return;

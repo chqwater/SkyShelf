@@ -28,7 +28,7 @@ cd frontend
 Run the following command to install all necessary packages:
 
 ```bash
-npm install
+npm install -f
 ```
 
 This command reads the `package.json` file and installs all required packages listed under `dependencies` and `devDependencies`.<br>

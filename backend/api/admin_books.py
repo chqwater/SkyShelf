@@ -30,6 +30,7 @@ class Book(Base):
     description = Column(String, nullable=False)
     book_url = Column(String(255), nullable=False)
     img_url = Column(String(255), nullable=False)
+    # Relationship to BookCategories
     categories = relationship("BookCategories", back_populates="book")
 
 class Author(Base):
@@ -41,14 +42,16 @@ class BookCategories(Base):
     __tablename__ = "Book_categories"
     b_id = Column(Integer, ForeignKey("Book.book_id"), primary_key=True, index=True)
     c_id = Column(Integer, ForeignKey("Categories.categories_id"), primary_key=True, index=True)
+    # Relationships
     book = relationship("Book", back_populates="categories")
-    categories = relationship("BookCategories", back_populates="book")
+    category = relationship("Categories", back_populates="books")
 
 class Categories(Base):
     __tablename__ = "Categories"
-    categories_name = Column(String(255), nullable=False)
     categories_id = Column(Integer, primary_key=True, index=True)
-    book = relationship("Book", back_populates="categories")
+    categories_name = Column(String(255), nullable=False)
+    # Relationship to BookCategories
+    books = relationship("BookCategories", back_populates="category")
 
 
 
@@ -58,7 +61,7 @@ async def get_books(
     db: Session = Depends(get_db)
 ):
     try:
-        # Base query to fetch books
+        # Base query
         books_query = db.query(
             Book.book_id,
             Book.book_name,
@@ -76,7 +79,7 @@ async def get_books(
             Author, Book.a_id == Author.author_id
         )
 
-        # Apply filtering if category_id is provided
+        # Apply category filter if category_id is provided
         if category_id:
             books_query = books_query.filter(Categories.categories_id == category_id)
 
@@ -105,3 +108,5 @@ async def get_books(
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An unexpected error occurred: {str(e)}")
+
+

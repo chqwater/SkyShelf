@@ -69,3 +69,35 @@ export function getAllUserInfo(){
         method: 'get'
     })
 }
+
+export function getBooks(category_id = null) {
+    const query = category_id ? `?category_id=${category_id}` : '';
+    return request({
+        url: `api/admin/books${query}`,
+        method: 'GET'
+    });
+}
+
+export function editBook(data: any){
+    return request({
+        url: 'api/admin/edit-book',
+        method: 'post',
+        data
+    })
+}
+
+export function deleteBook(book_id: number) {
+    const query = book_id ? `?book_id=${book_id}` : '';
+    return request({
+        url: `api/admin/delete-book${query}`,
+        method: 'post' // Sending the book_id as part of the payload
+    })
+}
+
+export function createBook(data:any){
+    return request({
+        url: 'api/admin/create-book',
+        method: 'post',
+        data
+    })
+}

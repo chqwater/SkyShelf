@@ -58,6 +58,7 @@ async def login_user(user: UserLogin, db: Session = Depends(get_db)):
     # Return the token and user info
     return {
         "message": "Login successful",
+        "user_id": db_user.user_id,
         "email": db_user.user_email,
         "username": db_user.user_name,
         "role": db_user.role

@@ -41,13 +41,13 @@ class BookCategories(Base):
     b_id = Column(Integer, ForeignKey("Book.book_id"), primary_key=True, index=True)
     c_id = Column(Integer, ForeignKey("Categories.categories_id"), primary_key=True, index=True)
     book = relationship("Book", back_populates="categories")
-    categories = relationship("BookCategories", back_populates="book")
+    category = relationship("Categories", back_populates="book_categories")  # Updated relationship
 
 class Categories(Base):
     __tablename__ = "Categories"
     categories_name = Column(String(255), nullable=False)
     categories_id = Column(Integer, primary_key=True, index=True)
-    book = relationship("Book", back_populates="categories")
+    book_categories = relationship("BookCategories", back_populates="category")  # Updated relationship
 
 
 # Define the CreateBookRequest Pydantic schema for the incoming request
@@ -58,8 +58,6 @@ class CreateBookRequest(BaseModel):
     img_url: str
     description: str
     category_id: int
-
-
 
 
 @router.post("/api/admin/create-book")
