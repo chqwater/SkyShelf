@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <div class="header-left" @click="hanleHome">
-            <img src="../../public/skys.jpg" alt="" style="height:30px">
+            <img src="../../public/skys.png" alt="" style="height:30px">
             <div class="web-title">SkyShelf</div>
         </div>
         <div class="header-right">
