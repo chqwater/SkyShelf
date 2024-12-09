@@ -61,24 +61,18 @@ async def delete_book(
     Delete a book by its ID, along with all related records in UserBook, BookCategories, and UserSelectedCategories.
     """
     try:
-        # Check if the book exists
         book = db.query(Book).filter(Book.book_id == book_id).first()
         if not book:
             raise HTTPException(status_code=404, detail=f"Book with id {book_id} not found")
 
-        # Step 1: Delete associated entries in the User_book table (Books linked to users)
         db.query(UserBook).filter(UserBook.user_book_b_id == book_id).delete()
 
-        # Step 2: Delete associated entries in the Book_categories table (Book linked to categories)
         db.query(BookCategories).filter(BookCategories.b_id == book_id).delete()
 
-        # Step 3: Delete associated entries in the User_selected_categories table (if applicable)
         db.query(UserSelectedCategories).filter(UserSelectedCategories.u_id == book_id).delete()
 
-        # Step 4: Delete the book entry itself
         db.delete(book)
 
-        # Step 5: Commit the changes to the database
         db.commit()
 
         return {"message": f"The book with ID {book_id} has been deleted successfully."}

@@ -113,7 +113,6 @@ async def update_journey(request: UpdateJourneyRequest, db: SessionLocal = Depen
 
 @router.get("/api/get-user-journeys/{user_id}")
 async def get_user_journeys(user_id: int, db: SessionLocal = Depends(get_db)):
-    # 检查用户是否存在
     user = db.query(UserInf).filter(UserInf.user_id == user_id).first()
     if not user:
         raise HTTPException(status_code=404, detail=f"User with id {user_id} not found")
